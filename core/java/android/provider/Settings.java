@@ -2444,9 +2444,15 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIF_WALLPAPER_ALPHA = "notif_wallpaper_alpha";
-
+        
         /**
-         * Vibrate when expanding notifications
+         * Statusbar State
+         * @hide
+         */
+        public static final String EXPANDED_DESKTOP_STATE = "expanded_desktop_state";
+
+        /**	
+         * Allows to show the background activity back the lockscreen
          * @hide
          */
         public static final String VIBRATE_NOTIF_EXPAND = "vibrate_notif_expand";

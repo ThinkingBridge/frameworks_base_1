@@ -292,6 +292,7 @@
     <string name="screen_lock">Screen lock</string>
     <!-- Button to turn off the phone, within the Phone Options dialog -->
     <string name="power_off">Power off</string>
+
     <!-- Spoken description for ringer silent option. [CHAR LIMIT=NONE] -->
     <string name="silent_mode_silent">Ringer off</string>
     <!-- Spoken description for ringer vibrate option. [CHAR LIMIT=NONE] -->
@@ -323,6 +324,13 @@
     <string name="reboot_safemode_confirm">Do you want to reboot into safe mode?
          This will disable all third party applications you have installed.
          They will be restored when you reboot again.</string>
+
+    <!-- label for item that toggles expand desktop mode -->
+    <string name="global_action_expanded_desktop">Expanded desktop</string>
+    <!-- status message in phone options dialog for when expand desktop mode is on -->
+    <string name="global_action_expanded_desktop_on">Enabled</string>
+    <!-- status message in phone options dialog for when expand desktop mode is off -->
+    <string name="global_action_expanded_desktop_off">Disabled</string>
 
     <!-- Recent Tasks dialog: title
      TODO: this should move to SystemUI.apk, but the code for the old

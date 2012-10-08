@@ -1497,4 +1497,11 @@
     <string name="toast_rotation_unlocked">화면 회전 잠김 해제</string>
     <string name="toast_rotation_locked">화면 회전 잠김</string>
     
+    <!-- label for item that toggles expand desktop mode -->
+    <string name="global_action_expanded_desktop">바탕화면 확장</string>
+    <!-- status message in phone options dialog for when expand desktop mode is on -->
+    <string name="global_action_expanded_desktop_on">활성화</string>
+    <!-- status message in phone options dialog for when expand desktop mode is off -->
+    <string name="global_action_expanded_desktop_off">비활성화</string>
+    
 </resources>
