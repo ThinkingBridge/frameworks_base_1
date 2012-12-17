@@ -1868,5 +1868,9 @@
   <java-symbol type="string" name="reboot_hot" />
   <java-symbol type="string" name="reboot_progress" />
   <java-symbol type="string" name="reboot_system" />
-  
+
+  <!-- HW rotation lock -->
+  <java-symbol type="string" name="toast_rotation_unlocked" />
+  <java-symbol type="string" name="toast_rotation_locked" />
+
 </resources>
