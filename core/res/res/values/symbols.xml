@@ -1821,6 +1821,16 @@
 
   <!-- From PinyinIME(!!!) -->
   <java-symbol type="string" name="inputMethod" />
+  
+  <!-- ===============================================================
+   ThinkingBridge
+   =============================================================== -->
+   
+   <!-- Config.xml entries -->
+  <java-symbol type="integer" name="config_backKillTimeout" />
+  
+  <!-- Developer settings - Kill app back press -->
+  <java-symbol type="string" name="app_killed_message" />
 
   <!-- Always show battery status on lockscreen -->
   <java-symbol type="string" name="lockscreen_always_battery" />
