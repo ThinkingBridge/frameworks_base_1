@@ -2603,6 +2603,12 @@ public final class Settings {
         public static final String QUIET_HOURS_STILL = "quiet_hours_still";
 
         /**
+         * Whether or not to launch default music player when headset is connected
+         * @hide
+         */
+        public static final String HEADSET_CONNECT_PLAYER = "headset_connect_player";
+
+        /**
          * Whether to attempt to dim the LED color during quiet hours.
          * @hide
          */
