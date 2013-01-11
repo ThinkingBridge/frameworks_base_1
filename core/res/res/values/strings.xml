@@ -375,12 +375,6 @@
     <!-- status message in phone options dialog for when airplane mode is off -->
     <string name="global_actions_airplane_mode_off_status">Airplane mode is OFF</string>
 
-    <!-- label for item that screenshots in phone options dialog -->
-    <string name="global_action_screenshot">Screenshot</string>
-
-    <!-- label for item that torches in phone options dialog -->
-    <string name="global_action_torch">Torch</string>
-
     <!-- label for item that toggles NavBar Hide -->
     <string name="global_actions_toggle_navbar_hide">Navigation Bar Controls</string>
 
@@ -3835,21 +3829,6 @@
 
     <!-- "Done" button for MediaRouter chooser dialog when grouping routes. [CHAR LIMIT=NONE] -->
     <string name="media_route_chooser_grouping_done">Done</string>
-
-    <!-- Reboot -->
-    <string name="reboot">Reboot</string>
-
-    <!-- Reboot recovery option -->
-    <string name="reboot_recovery">Recovery</string>
-
-    <!-- Reboot recovery option -->
-    <string name="reboot_download">Download</string>
-
-    <!-- Reboot recovery option -->
-    <string name="reboot_bootloader">Bootloader</string>
-
-    <!-- Rebooting message -->
-    <string name="reboot_progress">Your device is rebooting</string>
 
     <!-- Content description of a MediaRouteButton for accessibility support -->
     <string name="media_route_button_content_description">Media output</string>

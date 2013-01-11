@@ -5401,11 +5401,6 @@ public class WindowManagerService extends IWindowManager.Stub
                 mAnimatorDurationScale };
     }
 
-    @Override
-    public void reboot(String reason) {
-        ShutdownThread.reboot(getUiContext(), reason, false);
-    }
-
     // Called by window manager policy. Not exposed externally.
     @Override
     public int getLidState() {

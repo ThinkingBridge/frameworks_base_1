@@ -2651,21 +2651,6 @@ public final class Settings {
          */
         public static final String POWER_DIALOG_SHOW_NAVBAR_HIDE = "power_dialog_show_navbar_hide";
 
-         /**
-         * @hide
-         */
-        public static final String POWER_DIALOG_SHOW_SCREENSHOT = "power_dialog_show_screenshot";
-
-         /**
-         * @hide
-         */
-        public static final String POWER_DIALOG_SHOW_AIRPLANE_TOGGLE = "power_dialog_show_airplane_toggle";
-
-         /**
-         * @hide
-         */
-        public static final String POWER_DIALOG_SHOW_TORCH_TOGGLE = "power_dialog_show_torch_toggle";
-
         /**
          * @hide
          */
