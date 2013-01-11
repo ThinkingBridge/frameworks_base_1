@@ -332,7 +332,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     int mCurrentAppOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
     boolean mHasSoftInput = false;
     int mBackKillTimeout;
-    
     int mPointerLocationMode = 0; // guarded by mLock
 
     // The last window we were told about in focusChanged.
