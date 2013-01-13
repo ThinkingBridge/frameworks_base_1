@@ -2028,6 +2028,10 @@
   <public type="style" name="Widget.DeviceDefault.CheckedTextView" id="0x010301db" />
   <public type="style" name="Widget.DeviceDefault.Light.CheckedTextView" id="0x010301dc" />
   
+  <!-- ===============================================================
+     Resources added in version JB of ThinkingBridge
+     =============================================================== -->
+  <eat-comment />
   <!-- Power menu -->
   <java-symbol type="string" name="global_action_screenshot" />
   <java-symbol type="string" name="global_action_reboot" />
@@ -2045,4 +2049,6 @@
   <java-symbol type="layout" name="vibration_picker_dialog"/>
 
   <java-symbol type="bool" name="config_forceDisableHardwareKeyboard" />
+  
+  <java-symbol type="bool" name="config_isTegra3" />
 </resources>
