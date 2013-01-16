@@ -159,12 +159,12 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
      * @param keyguardShowing True if keyguard is showing
      */
     public void showDialog(boolean keyguardShowing, boolean isDeviceProvisioned) {
-        mKeyguardShowing = keyguardShowing;
+    	mKeyguardShowing = keyguardShowing;
         mDeviceProvisioned = isDeviceProvisioned;
         if (mDialog != null) {
-        	if(mUiContext != null) {
-        		mUiContext = null;
-        	}
+            if (mUiContext != null) {
+                mUiContext = null;
+            }
             mDialog.dismiss();
             mDialog = null;
             mDialog = createDialog();
@@ -287,25 +287,27 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 }
             });
         
-        mItems.add(
+        // next: reboot
+        // only shown if enabled, enabled by default
+            mItems.add(
                 new SinglePressAction(R.drawable.ic_lock_reboot, R.string.global_action_reboot) {
-                	public void onPress() {
-                		mWindowManagerFuncs.reboot();
-                	}
+                    public void onPress() {
+                        mWindowManagerFuncs.reboot();
+                    }
 
-                public boolean onLongPress() {
-                    mWindowManagerFuncs.rebootSafeMode(true);
-                    return true;
-                }
+                    public boolean onLongPress() {
+                        mWindowManagerFuncs.rebootSafeMode(true);
+                        return true;
+                    }
 
-                public boolean showDuringKeyguard() {
-                    return true;
-                }
+                    public boolean showDuringKeyguard() {
+                        return true;
+                    }
 
-                public boolean showBeforeProvisioning() {
-                    return true;
-                }
-            });
+                    public boolean showBeforeProvisioning() {
+                        return true;
+                    }
+                });
         
      // next: screenshot
         mItems.add(
@@ -340,7 +342,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                         R.string.global_action_bug_report) {
 
                     public void onPress() {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getUiContext());
+                    	AlertDialog.Builder builder = new AlertDialog.Builder(getUiContext());
                         builder.setTitle(com.android.internal.R.string.bugreport_title);
                         builder.setMessage(com.android.internal.R.string.bugreport_message);
                         builder.setNegativeButton(com.android.internal.R.string.cancel, null);
