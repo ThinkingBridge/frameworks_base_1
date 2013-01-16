@@ -2039,10 +2039,5 @@
   <java-symbol type="drawable" name="ic_lock_screenshot" />
   <java-symbol type="drawable" name="ic_lock_reboot" />
 
-  <!-- Custom Vibrations -->
-  <java-symbol type="string" name="vibration_picker_title"/>
-  <java-symbol type="string" name="vibration_picker_del_title"/>
-  <java-symbol type="layout" name="vibration_picker_dialog"/>
-
   <java-symbol type="bool" name="config_forceDisableHardwareKeyboard" />
 </resources>

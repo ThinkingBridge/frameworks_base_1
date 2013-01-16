@@ -4031,10 +4031,6 @@
     <!-- Back to kill -->
     <string name="app_killed_message">Application killed.</string>
 
-    <!-- Vibration picker dialog title -->
-    <string name="vibration_picker_title">Select vibration</string>
-    <string name="vibration_picker_del_title">Delete vibration</string>
-
     <!-- In WiFi notification -->
     <string name="notify_turn_wifi_off_title">Turn Wi-Fi off</string>
 
