@@ -800,27 +800,27 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     }
 
     private String getAvailMemory() {
-    MemoryInfo memInfo = new MemoryInfo();
-    ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-    am.getMemoryInfo(memInfo);
-    long availableMem = memInfo.availMem / 1048576L;
-    return String.valueOf(availableMem);
+        MemoryInfo memInfo = new MemoryInfo();
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        am.getMemoryInfo(memInfo);
+        long availableMem = memInfo.availMem / 1048576L;
+        return String.valueOf(availableMem);
     }
 
     public int getTotalMemory() {
-    String str1 = "/proc/meminfo";
-    String str2;
-    String[] arrayOfString;
-    int memory = 0;
-    try {
-      FileReader localFileReader = new FileReader(str1);
-      BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
-      str2 = localBufferedReader.readLine();
-      arrayOfString = str2.split("\\s+");
-      memory = Integer.valueOf(arrayOfString[1]).intValue() * 1024;
-      localBufferedReader.close();
-    } catch (IOException e) {
+        String str1 = "/proc/meminfo";
+        String str2;
+        String[] arrayOfString;
+        int memory = 0;
+        try {
+            FileReader localFileReader = new FileReader(str1);
+            BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
+            str2 = localBufferedReader.readLine(); // meminfo
+            arrayOfString = str2.split("\\s+");
+            memory = Integer.valueOf(arrayOfString[1]).intValue() * 1024;
+            localBufferedReader.close();
+        } catch (IOException e) { //
+        }
+        return memory / 1048576;
     }
-    return memory / 1048576;
-  }
 }
