@@ -222,7 +222,7 @@ public class AudioService extends IAudioService.Stub implements OnFinished {
 
    /** @hide Maximum volume index values for audio streams */
     private final int[] MAX_STREAM_VOLUME = new int[] {
-        5,  // STREAM_VOICE_CALL
+        7,  // STREAM_VOICE_CALL
         7,  // STREAM_SYSTEM
         7,  // STREAM_RING
         30, // STREAM_MUSIC
