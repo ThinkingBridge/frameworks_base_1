@@ -145,6 +145,9 @@ public class SbBatteryController extends LinearLayout {
         if (mBatteryStyle == STYLE_ICON_CIRCLEMOD) {
             icon = plugged ? R.drawable.stat_sys_battery_charge_circle
                     : R.drawable.stat_sys_battery_circle;
+        } else if (mBatteryStyle == STYLE_ICON_XOOM) {
+        	icon = plugged ? R.drawable.stat_sys_battery_charge_xoom
+        			: R.drawable.stat_sys_battery_xoom;
         } else if (mBatteryStyle == STYLE_ICON_CIRCLE || mBatteryStyle == STYLE_ICON_CIRCLE_PERCENT) {
         	icon = 0;
         } else {
