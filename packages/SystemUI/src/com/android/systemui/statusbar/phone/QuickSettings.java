@@ -868,7 +868,9 @@ class QuickSettings {
                 quick.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        // maybe something here?
+                    	Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.setClassName("net.cactii.flash2", "net.cactii.flash2.MainActivity");
+                        startSettingsActivity(intent);
                         return true;
                     }
                 });
