@@ -18,6 +18,7 @@ package com.android.systemui.recent;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.StatusBarManager;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -33,6 +34,7 @@ import android.view.WindowManager.LayoutParams;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.tablet.StatusBarPanel;
+import com.android.systemui.statusbar.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,16 +49,23 @@ public class RecentsActivity extends Activity {
     public static final String WAITING_FOR_WINDOW_ANIMATION_PARAM = "com.android.systemui.recent.WAITING_FOR_WINDOW_ANIMATION";
     private static final String WAS_SHOWING = "was_showing";
 
-    private RecentsPanelView mRecentsPanel;
+
     private static ArrayList<NavigationCallback>sNavigationCallbacks
             = new ArrayList<NavigationCallback>();
-    private static RecentsPanelView mRecentsPanel;
-    private static boolean mShowing;
     private IntentFilter mIntentFilter;
+    private RecentsPanelView mRecentsPanel;
     private boolean mShowing;
     private boolean mForeground;
     
     public static boolean mHomeForeground = false;
+
+    public interface NavigationCallback {
+        public final static int NAVBAR_BACK_HINT = 0;
+        public final static int NAVBAR_RECENTS_HINT = 1;
+
+        public abstract void setNavigationIconHints(int button, int hints, boolean force);
+        public abstract int getNavigationIconHints();
+    };
 
     private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
@@ -272,13 +281,5 @@ public class RecentsActivity extends Activity {
 
     public static void addNavigationCallback(NavigationCallback callback) {
         sNavigationCallbacks.add(callback);
-    }
-
-    public static int getTasks() {
-        return mRecentsPanel.getTasks();
-    }
-
-    public static boolean isActivityShowing() {
-        return mShowing;
     }
 }
