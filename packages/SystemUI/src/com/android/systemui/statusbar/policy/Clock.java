@@ -41,19 +41,10 @@ import android.util.AttributeSet;
 import android.util.Slog;
 import android.view.View;
 import android.widget.TextView;
-import android.app.ActivityManager;
-import android.app.ActivityManager.MemoryInfo;
-import android.app.ActivityManagerNative;
-import android.app.ActivityOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import com.android.internal.R;
 
@@ -152,8 +143,7 @@ public class Clock extends TextView {
 
     final void updateClock() {
         mCalendar.setTimeInMillis(System.currentTimeMillis());
-        int availMem = Integer.parseInt(getAvailMemory());
-        setText(getSmallTime()+" - "+String.valueOf(availMem) + "MB");
+        setText(getSmallTime());
     }
 
     private final CharSequence getSmallTime() {
@@ -284,30 +274,6 @@ public class Clock extends TextView {
             setVisibility(View.VISIBLE);
         else
             setVisibility(View.GONE);
-    }
-    private String getAvailMemory() {
-        MemoryInfo memInfo = new MemoryInfo();
-        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-        am.getMemoryInfo(memInfo);
-        long availableMem = memInfo.availMem / 1048576L;
-        return String.valueOf(availableMem);
-    }
-
-    public int getTotalMemory() {
-        String str1 = "/proc/meminfo";
-        String str2;
-        String[] arrayOfString;
-        int memory = 0;
-        try {
-            FileReader localFileReader = new FileReader(str1);
-            BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
-            str2 = localBufferedReader.readLine(); // meminfo
-            arrayOfString = str2.split("\\s+");
-            memory = Integer.valueOf(arrayOfString[1]).intValue() * 1024;
-            localBufferedReader.close();
-        } catch (IOException e) { //
-        }
-        return memory / 1048576;
     }
 }
 
