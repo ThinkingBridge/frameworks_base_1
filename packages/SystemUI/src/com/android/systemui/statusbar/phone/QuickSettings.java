@@ -875,9 +875,7 @@ class QuickSettings {
                 quick.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                    	Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.setClassName("net.cactii.flash2", "net.cactii.flash2.MainActivity");
-                        startSettingsActivity(intent);
+                    	// sad
                         return true;
                     }
                 });
@@ -1659,8 +1657,8 @@ class QuickSettings {
     };
 
     private void setFastCharge(final boolean on) {
-        Intent fastChargeIntent = new Intent("com.aokp.romcontrol.ACTION_CHANGE_FCHARGE_STATE");
-        fastChargeIntent.setPackage("com.aokp.romcontrol");
+        Intent fastChargeIntent = new Intent("com.thinkingbridge.customized.ACTION_CHANGE_FCHARGE_STATE");
+        fastChargeIntent.setPackage("com.thinkingbridge.customized");
         fastChargeIntent.putExtra("newState", on);
         mContext.sendBroadcast(fastChargeIntent);
         mHandler.postDelayed(new Runnable() {

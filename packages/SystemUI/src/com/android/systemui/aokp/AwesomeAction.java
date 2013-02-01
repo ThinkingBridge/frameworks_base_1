@@ -142,7 +142,7 @@ public class AwesomeAction {
             return true;
         } else if (action.equals(ACTION_TORCH)) {
             Intent intent = new Intent("android.intent.action.MAIN");
-            Intent i = new Intent("net.cactii.flash2.TOGGLE_FLASHLIGHT");
+            intent.setComponent(ComponentName.unflattenFromString("com.aokp.Torch/.TorchActivity"));
             intent.addCategory("android.intent.category.LAUNCHER");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
