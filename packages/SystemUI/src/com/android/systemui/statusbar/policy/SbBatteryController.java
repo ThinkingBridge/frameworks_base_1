@@ -195,7 +195,7 @@ public class SbBatteryController extends LinearLayout {
                     mBatteryTextOnly.setVisibility(View.GONE);
                     mBatteryTextOnly_Plugged.setVisibility(View.VISIBLE);
                     mBatteryTextOnly_Low.setVisibility(View.GONE);
-                } else if (level < 16) {
+                } else if (level < 15) {
                     mBatteryTextOnly.setVisibility(View.GONE);
                     mBatteryTextOnly_Plugged.setVisibility(View.GONE);
                     mBatteryTextOnly_Low.setVisibility(View.VISIBLE);
