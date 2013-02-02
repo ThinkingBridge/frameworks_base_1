@@ -2698,6 +2698,13 @@ public final class Settings {
         public static final String POWER_MENU_EXPANDED_DESKTOP_ENABLED = "power_menu_expanded_desktop_enabled";
 
         /**
+         * This is used to change from singlepane mode forcing it to
+         * Change into multipane mode. Default is disabled.
+         * @hide
+         */
+        public static final String FORCE_DUAL_PANEL = "force_dualpanel";
+
+        /**
          * User configurable flag for determining if NavBar is enabled
          *
          * @hide
