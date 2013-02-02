@@ -279,7 +279,7 @@ public class KeyguardSelectorView extends LinearLayout implements KeyguardSecuri
 
     public void updateResources() {
         String storedVal = Settings.System.getString(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_TARGETS);
+                Settings.System.LOCKSCREEN_TARGETS, UserHandle.USER_CURRENT);
         if (storedVal == null) {
             // Update the search icon with drawable from the search .apk
             if (!mSearchDisabled) {
