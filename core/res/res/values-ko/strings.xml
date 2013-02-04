@@ -1493,4 +1493,8 @@
     <!-- Hot Reboot Progress Dialog message. Shown if the user chooses to hot reboot the device. -->
     <string name="hot_reboot_progress">프레임워크를 다시 시작하는 중\u2026</string>
     
+    <!-- Hardware Rotation lock string -->
+    <string name="toast_rotation_unlocked">화면 회전 잠김 해제</string>
+    <string name="toast_rotation_locked">화면 회전 잠김</string>
+    
 </resources>

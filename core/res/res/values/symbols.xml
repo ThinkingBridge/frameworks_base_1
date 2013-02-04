@@ -1827,6 +1827,10 @@
   <!-- From PinyinIME(!!!) -->
   <java-symbol type="string" name="inputMethod" />
   
+  <!-- Hardware Rotation Lock -->
+  <java-symbol type="bool" name="config_forceDisableHardwareKeyboard" />
+  <java-symbol type="bool" name="config_hasRotationLockSwitch" />
+  
   <!-- ===============================================================
    ThinkingBridge
    =============================================================== -->
