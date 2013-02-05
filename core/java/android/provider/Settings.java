@@ -3766,6 +3766,12 @@ public final class Settings {
          */
         @Deprecated
         public static final String ADB_ENABLED = Global.ADB_ENABLED;
+        
+        /**
+         * The TCP/IP port to run ADB on, or -1 for USB
+         * @hide
+         */
+        public static final String ADB_PORT = "adb_port";
 
         /**
          * Whether to display the ADB notification.
