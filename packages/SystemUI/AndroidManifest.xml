@@ -207,6 +207,24 @@
 <!--            <category android:name="android.intent.category.LAUNCHER" />-->
             </intent-filter>
         </activity>
+        
+        <!-- Menboong World -->
+        <activity
+            android:name=".InfoCircus"
+            android:exported="true"
+            android:label="InfoCircus"
+            android:icon="@drawable/redbean2"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.android.internal.category.TBLOGO" />
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.android.systemui.aokp.NavbarToggle"
