@@ -570,6 +570,7 @@ public class QuickSettings {
                     quick.setOnClickListener(new View.OnClickListener() {
                          @Override
                         public void onClick(View v) {
+                             getService().animateCollapsePanels();
                             connManager.setMobileDataEnabled(connManager.getMobileDataEnabled() ? false : true);
                             String strData = connManager.getMobileDataEnabled() ?
                                     r.getString(R.string.quick_settings_data_off_label)
