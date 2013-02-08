@@ -2682,6 +2682,12 @@ public final class Settings {
          *  @hide
          */
         public static final String USER_UI_MODE = "user_ui_mode";
+        
+        /**
+         * Whether power menu expanded desktop is enabled
+         * @hide
+         */
+        public static final String POWER_MENU_EXPANDED_DESKTOP_ENABLED = "power_menu_expanded_desktop_enabled";
 
         /**
          * User configurable flag for determining if NavBar is enabled
