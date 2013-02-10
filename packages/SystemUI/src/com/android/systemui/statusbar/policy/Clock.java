@@ -64,11 +64,11 @@ public class Clock extends TextView {
 
     protected int mAmPmStyle = AM_PM_STYLE_GONE;
 
-    public static final int WEEKDAY_STYLE_NORMAL = 0;
+    public static final int WEEKDAY_STYLE_GONE   = 0;
     public static final int WEEKDAY_STYLE_SMALL  = 1;
-    public static final int WEEKDAY_STYLE_GONE   = 2;
+    public static final int WEEKDAY_STYLE_NORMAL = 2;
 
-    protected int mWeekdayStyle = WEEKDAY_STYLE_NORMAL;
+    protected int mWeekdayStyle = WEEKDAY_STYLE_GONE;
 
     public static final int STYLE_HIDE_CLOCK     = 0;
     public static final int STYLE_CLOCK_RIGHT    = 1;
