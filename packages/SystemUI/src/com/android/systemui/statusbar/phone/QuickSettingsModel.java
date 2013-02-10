@@ -294,6 +294,10 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     private QuickSettingsTileView mWifiTetherTile;
     private RefreshCallback mWifiTetherCallback;
     private State mWifiTetherState = new State();
+    
+    private QuickSettingsTileView mQuietHoursTile;
+    private RefreshCallback mQuietHoursCallback;
+    private State mQuietHoursState = new State();
 
  /*   private QuickSettingsTileView mBTTetherTile;
     private RefreshCallback mBTTetherCallback;
@@ -391,6 +395,8 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
                 refresh2gTile();
             if (toggle.equals(QuickSettings.LTE_TOGGLE))
                 refreshLTETile();
+            if (toggle.equals(QuickSettings.QUIETHOURS_TOGGLE))
+                refreshQuietHoursTile();
         }
 
     }
@@ -723,6 +729,34 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         mLocationState.label = description;
         if (togglesContain(QuickSettings.GPS_TOGGLE))
             mLocationCallback.refreshView(mLocationTile, mLocationState);
+    }
+    
+    // Quiet Hours
+    void addQuietHoursTile(QuickSettingsTileView view, RefreshCallback cb) {
+        mQuietHoursTile = view;
+        mQuietHoursCallback = cb;
+        refreshQuietHoursTile();
+    }
+
+    void onQuietHoursChanged() {
+        boolean enabled = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.QUIET_HOURS_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+        mQuietHoursState.enabled = enabled;
+        mQuietHoursState.iconId = enabled
+                 ? R.drawable.ic_qs_quiet_hours_on
+                : (mUseDefaultTheme ? R.drawable.ic_qs_quiet_hours_off : R.drawable.ic_qs_quiet_hours_off);
+        mQuietHoursState.label = enabled
+                ? mContext.getString(R.string.quick_settings_quiet_hours_on_label)
+                : mContext.getString(R.string.quick_settings_quiet_hours_off_label);
+
+        if (mQuietHoursTile != null && mQuietHoursCallback != null) {
+            mQuietHoursCallback.refreshView(mQuietHoursTile, mQuietHoursState);
+        }
+    }
+
+    void refreshQuietHoursTile() {
+        if (mQuietHoursTile != null) {
+            onQuietHoursChanged();
+        }
     }
 
     // Bug report
