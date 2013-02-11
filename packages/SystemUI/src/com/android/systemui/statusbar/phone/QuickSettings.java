@@ -1337,40 +1337,40 @@ public class QuickSettings {
                     }
                 });
                 break;
-           case QUIETHOURS_TILE:
+            case QUIETHOURS_TILE:
                 quick = (QuickSettingsTileView)
                         inflater.inflate(R.layout.quick_settings_tile, parent, false);
                 quick.setBackgroundResource(mTileBG);
                 quick.setContent(R.layout.quick_settings_tile_quiethours, inflater);
                 quick.setOnClickListener(new View.OnClickListener() {
-           @Override
-            public void onClick(View v) {
-                Settings.System.putIntForUser(mContext.getContentResolver(), Settings.System.QUIET_HOURS_ENABLED,
-                mEnabled ? 0 : 1, UserHandle.USER_CURRENT);
-            }
-        });
-
-        quick.setOnLongClickListener(new View.OnLongClickListener() {
-           @Override
-           public boolean onLongClick(View v) {
-                Intent intent = new Intent("android.intent.action.MAIN");
-                intent.setClassName("com.android.settings", "com.android.settings.Settings$QuietHoursSettingsActivity");
-                intent.addCategory("android.intent.category.LAUNCHER");
-               startSettingsActivity(intent);
-               return true;
-            }
-        });
-        mModel.addQuietHoursTile(quick, new QuickSettingsModel.RefreshCallback() {
-            @Override
-            public void refreshView(QuickSettingsTileView view, State state) {
-       	TextView tv = (TextView) view.findViewById(R.id.quiethours_textview);
-	            tv.setText(state.label);
-                tv.setTextSize(1, mTileTextSize);
-                tv.setTextColor(mTileText);
-                tv.setCompoundDrawablesWithIntrinsicBounds(0, state.iconId, 0, 0);
-            }
-        });
-        break;
+                  public void onClick(View v) {
+                        boolean enabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                                 Settings.System.QUIET_HOURS_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+                        Settings.System.putBoolean(mContext.getContentResolver(),
+                                 Settings.System.QUIET_HOURS_ENABLED, !enabled);
+                    }
+                });
+                quick.setOnLongClickListener(new View.OnLongClickListener() {
+                   @Override
+                   public boolean onLongClick(View v) {
+                        Intent intent = new Intent("android.intent.action.MAIN");
+                        intent.setClassName("com.android.settings", "com.android.settings.Settings$QuietHoursSettingsActivity");
+                        intent.addCategory("android.intent.category.LAUNCHER");
+                       startSettingsActivity(intent);
+                       return true;
+                    }
+                });
+                mModel.addQuietHoursTile(quick, new QuickSettingsModel.RefreshCallback() {
+                    @Override
+                    public void refreshView(QuickSettingsTileView view, State state) {
+		       	TextView tv = (TextView) view.findViewById(R.id.quiethours_textview);
+			tv.setText(state.label);
+                        tv.setTextSize(1, mTileTextSize);
+                        tv.setTextColor(mTileText);
+                        tv.setCompoundDrawablesWithIntrinsicBounds(0, state.iconId, 0, 0);
+                    }
+                });
+                break;
         }
         return quick;
     }
