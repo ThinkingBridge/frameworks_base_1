@@ -133,7 +133,7 @@ public class QuickSettings {
    // private static final int BT_TETHER_TILE = 23;
     private static final int SOUND_STATE_TILE = 24;
     private static final int QUIETHOURS_TILE = 25;
-    private static final int NAVBAR_HIDE_TILE = 25;
+    private static final int NAVBAR_HIDE_TILE = 26;
 
     public static final String USER_TOGGLE = "USER";
     public static final String BRIGHTNESS_TOGGLE = "BRIGHTNESS";
@@ -1381,7 +1381,6 @@ public class QuickSettings {
             case QUIETHOURS_TILE:
                 quick = (QuickSettingsTileView)
                         inflater.inflate(R.layout.quick_settings_tile, parent, false);
-                quick.setBackgroundResource(mTileBG);
                 quick.setContent(R.layout.quick_settings_tile_quiethours, inflater);
                 quick.setOnClickListener(new View.OnClickListener() {
                   @Override
@@ -1406,9 +1405,8 @@ public class QuickSettings {
                     @Override
                     public void refreshView(QuickSettingsTileView view, State state) {
 		       	TextView tv = (TextView) view.findViewById(R.id.quiethours_textview);
-			tv.setText(state.label);
+                        tv.setText(state.label);
                         tv.setTextSize(1, mTileTextSize);
-                        tv.setTextColor(mTileText);
                         tv.setCompoundDrawablesWithIntrinsicBounds(0, state.iconId, 0, 0);
                     }
                 });
