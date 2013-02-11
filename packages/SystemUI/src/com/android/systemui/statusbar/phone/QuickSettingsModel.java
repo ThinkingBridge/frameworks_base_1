@@ -739,11 +739,11 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     }
 
     void onQuietHoursChanged() {
-    	boolean enabled = Settings.System.getInt(mContext.getContentResolver(), Settings.System.QUIET_HOURS_ENABLED, 0) != 0;
+        boolean enabled = Settings.System.getBoolean(mContext.getContentResolver(), Settings.System.QUIET_HOURS_ENABLED, false);
         mQuietHoursState.enabled = enabled;
         mQuietHoursState.iconId = enabled
                 ? R.drawable.ic_qs_quiet_hours_on
-                : (mUseDefaultTheme ? R.drawable.ic_qs_quiet_hours_off : R.drawable.ic_qs_quiet_hours_off);
+                : R.drawable.ic_qs_quiet_hours_off;
         mQuietHoursState.label = enabled
                 ? mContext.getString(R.string.quick_settings_quiet_hours_on_label)
                 : mContext.getString(R.string.quick_settings_quiet_hours_off_label);
