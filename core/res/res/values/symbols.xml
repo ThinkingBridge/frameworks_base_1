@@ -1863,6 +1863,9 @@
   
   <!-- Hardware Key ReMapping -->
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
+  <java-symbol type="integer" name="config_deviceHardwareMenuScanCode" />
+  <java-symbol type="integer" name="config_deviceHardwareHomeScanCode" />
+  <java-symbol type="integer" name="config_deviceHardwareBackScanCode" />
 
   <!-- Power menu -->
   <java-symbol type="array" name="shutdown_reboot_actions" />

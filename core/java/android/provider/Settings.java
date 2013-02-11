@@ -3076,6 +3076,12 @@ public final class Settings {
          * @hide
          */
         public static final String MVNO_ROAMING = "mvno_roaming";
+        
+        /**
+         * Disable the hardware keys completely
+         * @hide
+         */
+        public static final String HARDWARE_KEY_DISABLE = "hardware_key_disable";
 
         /**
          * Whether to enable custom rebindings of the actions performed on
