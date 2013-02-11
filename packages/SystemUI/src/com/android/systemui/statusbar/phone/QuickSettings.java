@@ -130,9 +130,9 @@ public class QuickSettings {
     private static final int TWOG_TILE = 21;
     private static final int LTE_TILE = 22;
     private static final int FAV_CONTACT_TILE = 23;
-   // private static final int BT_TETHER_TILE = 24;
-    private static final int SOUND_STATE_TILE = 25;
-    private static final int QUIETHOURS_TILE = 26;
+   // private static final int BT_TETHER_TILE = 23;
+    private static final int SOUND_STATE_TILE = 24;
+    private static final int QUIETHOURS_TILE = 25;
 
     public static final String USER_TOGGLE = "USER";
     public static final String BRIGHTNESS_TOGGLE = "BRIGHTNESS";
