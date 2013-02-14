@@ -626,8 +626,9 @@ public class PieMenu extends FrameLayout {
         mStatusPath.addCircle(mCenter.x, mCenter.y, mStatusRadius, Path.Direction.CW);
     }
 
-    return !(item.getName().equals(PieControl.MENU_BUTTON) && !mPanel.currentAppUsesMenu() && !mUseMenuAlways) &&
-            !(item.getName().equals(PieControl.SEARCH_BUTTON) && !mUseSearch);
+    private boolean canItemDisplay(PieItem item) {
+        return !(item.getName().equals(PieControl.MENU_BUTTON) && !mPanel.currentAppUsesMenu() && !mUseMenuAlways) &&
+                !(item.getName().equals(PieControl.SEARCH_BUTTON) && !mUseSearch);
     }
 
     private void layoutPie() {
