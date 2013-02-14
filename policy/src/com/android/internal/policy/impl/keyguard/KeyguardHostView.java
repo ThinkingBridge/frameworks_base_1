@@ -398,17 +398,6 @@ public class KeyguardHostView extends KeyguardViewBase {
 
         @Override
         public void onRemoveView(View v, boolean deletePermanently) {
-            if (deletePermanently) {
-                final int appWidgetId = ((KeyguardWidgetFrame) v).getContentAppWidgetId();
-                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID &&
-                        appWidgetId != LockPatternUtils.ID_DEFAULT_STATUS_WIDGET) {
-                    mAppWidgetHost.deleteAppWidgetId(appWidgetId);
-                }
-            }
-        }
-
-        @Override
-        public void onRemoveView(View v, boolean deletePermanently) {
             mUnlimitedWidgets = Settings.System.getBoolean(getContext().getContentResolver(),
                                   Settings.System.LOCKSCREEN_UNLIMITED_WIDGETS, false);
             if (mUnlimitedWidgets) {
@@ -1107,6 +1096,14 @@ public class KeyguardHostView extends KeyguardViewBase {
             }
         }
         return widgetCount;
+    }
+    
+    private void setAddWidgetEnabled(boolean clickable) {
+        View addWidget = mAppWidgetContainer.findViewById(R.id.keyguard_add_widget);
+        if (addWidget != null) {
+            View addWidgetButton = addWidget.findViewById(R.id.keyguard_add_widget_view);
+            addWidgetButton.setEnabled(clickable);
+        }
     }
 
     private void addDefaultWidgets() {
