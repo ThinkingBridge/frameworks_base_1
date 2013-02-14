@@ -26,7 +26,6 @@ import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContentResolver;
@@ -85,6 +84,7 @@ public class KeyguardHostView extends KeyguardViewBase {
     private int mAppWidgetToShow;
 
     private boolean mCheckAppWidgetConsistencyOnBootCompleted = false;
+    private boolean mCleanupAppWidgetsOnBootCompleted = false;
 
     protected OnDismissAction mDismissAction;
 
@@ -94,8 +94,6 @@ public class KeyguardHostView extends KeyguardViewBase {
     private KeyguardSecurityModel mSecurityModel;
     private KeyguardViewStateManager mViewStateManager;
 
-    boolean mPersitentStickyWidgetLoaded = false;
-
     private Rect mTempRect = new Rect();
 
     private int mDisabledFeatures;
@@ -103,6 +101,10 @@ public class KeyguardHostView extends KeyguardViewBase {
     private boolean mCameraDisabled;
 
     private boolean mSafeModeEnabled;
+
+    private boolean mUserSetupCompleted;
+    // User for whom this host view was created
+    private int mUserId;
 
     /*package*/ interface TransportCallback {
         void onListenerDetached();
@@ -129,8 +131,12 @@ public class KeyguardHostView extends KeyguardViewBase {
     public KeyguardHostView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mLockPatternUtils = new LockPatternUtils(context);
+        mUserId = mLockPatternUtils.getCurrentUser();
         mAppWidgetHost = new AppWidgetHost(
                 context, APPWIDGET_HOST_ID, mOnClickHandler, Looper.myLooper());
+        mAppWidgetHost.setUserId(mUserId);
+        cleanupAppWidgetIds();
+
         mAppWidgetManager = AppWidgetManager.getInstance(mContext);
         mSecurityModel = new KeyguardSecurityModel(context);
 
@@ -144,6 +150,8 @@ public class KeyguardHostView extends KeyguardViewBase {
         }
 
         mSafeModeEnabled = LockPatternUtils.isSafeModeEnabled();
+        mUserSetupCompleted = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.USER_SETUP_COMPLETE, 0, UserHandle.USER_CURRENT) != 0;
 
         if (mSafeModeEnabled) {
             Log.v(TAG, "Keyguard widgets disabled by safe mode");
@@ -156,6 +164,39 @@ public class KeyguardHostView extends KeyguardViewBase {
         }
     }
 
+    private void cleanupAppWidgetIds() {
+        // Since this method may delete a widget (which we can't do until boot completed) we
+        // may have to defer it until after boot complete.
+        if (!KeyguardUpdateMonitor.getInstance(mContext).hasBootCompleted()) {
+            mCleanupAppWidgetsOnBootCompleted = true;
+            return;
+        }
+        // Clean up appWidgetIds that are bound to lockscreen, but not actually used
+        // This is only to clean up after another bug: we used to not call
+        // deleteAppWidgetId when a user manually deleted a widget in keyguard. This code
+        // shouldn't have to run more than once per user. AppWidgetProviders rely on callbacks
+        // that are triggered by deleteAppWidgetId, which is why we're doing this
+        int[] appWidgetIdsInKeyguardSettings = mLockPatternUtils.getAppWidgets();
+        int[] appWidgetIdsBoundToHost = mAppWidgetHost.getAppWidgetIds();
+        for (int i = 0; i < appWidgetIdsBoundToHost.length; i++) {
+            int appWidgetId = appWidgetIdsBoundToHost[i];
+            if (!contains(appWidgetIdsInKeyguardSettings, appWidgetId)) {
+                Log.d(TAG, "Found a appWidgetId that's not being used by keyguard, deleting id "
+                        + appWidgetId);
+                mAppWidgetHost.deleteAppWidgetId(appWidgetId);
+            }
+        }
+    }
+
+    private static boolean contains(int[] array, int target) {
+        for (int value : array) {
+            if (value == target) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private KeyguardUpdateMonitorCallback mUpdateMonitorCallbacks =
             new KeyguardUpdateMonitorCallback() {
         @Override
@@ -164,6 +205,10 @@ public class KeyguardHostView extends KeyguardViewBase {
                 checkAppWidgetConsistency();
                 mSwitchPageRunnable.run();
                 mCheckAppWidgetConsistencyOnBootCompleted = false;
+            }
+            if (mCleanupAppWidgetsOnBootCompleted) {
+                cleanupAppWidgetIds();
+                mCleanupAppWidgetsOnBootCompleted = false;
             }
         }
     };
@@ -241,8 +286,8 @@ public class KeyguardHostView extends KeyguardViewBase {
         } else {
             MAX_WIDGETS = 5;
         }
-        if (numWidgets() >= MAX_WIDGETS) {
-            setAddWidgetEnabled(false);
+        if (!shouldEnableAddWidget()) {
+            mAppWidgetContainer.setAddWidgetEnabled(false);
         }
         checkAppWidgetConsistency();
         mSwitchPageRunnable.run();
@@ -251,6 +296,10 @@ public class KeyguardHostView extends KeyguardViewBase {
 
         showPrimarySecurityScreen(false);
         updateSecurityViews();
+    }
+
+    private boolean shouldEnableAddWidget() {
+        return numWidgets() < MAX_WIDGETS && mUserSetupCompleted;
     }
 
     private int getDisabledFeatures(DevicePolicyManager dpm) {
@@ -302,14 +351,14 @@ public class KeyguardHostView extends KeyguardViewBase {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mAppWidgetHost.startListening();
+        mAppWidgetHost.startListeningAsUser(mUserId);
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mUpdateMonitorCallbacks);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mAppWidgetHost.stopListening();
+        mAppWidgetHost.stopListeningAsUser(mUserId);
         KeyguardUpdateMonitor.getInstance(mContext).removeCallback(mUpdateMonitorCallbacks);
     }
 
@@ -345,10 +394,21 @@ public class KeyguardHostView extends KeyguardViewBase {
             if (numWidgets() >= MAX_WIDGETS) {
                 setAddWidgetEnabled(false);
             }
-        };
+        }
 
         @Override
-        public void onRemoveView(View v) {
+        public void onRemoveView(View v, boolean deletePermanently) {
+            if (deletePermanently) {
+                final int appWidgetId = ((KeyguardWidgetFrame) v).getContentAppWidgetId();
+                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID &&
+                        appWidgetId != LockPatternUtils.ID_DEFAULT_STATUS_WIDGET) {
+                    mAppWidgetHost.deleteAppWidgetId(appWidgetId);
+                }
+            }
+        }
+
+        @Override
+        public void onRemoveView(View v, boolean deletePermanently) {
             mUnlimitedWidgets = Settings.System.getBoolean(getContext().getContentResolver(),
                                   Settings.System.LOCKSCREEN_UNLIMITED_WIDGETS, false);
             if (mUnlimitedWidgets) {
@@ -358,6 +418,20 @@ public class KeyguardHostView extends KeyguardViewBase {
             }
             if (numWidgets() < MAX_WIDGETS) {
                 setAddWidgetEnabled(true);
+            }
+            if (deletePermanently) {
+                final int appWidgetId = ((KeyguardWidgetFrame) v).getContentAppWidgetId();
+                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID &&
+                        appWidgetId != LockPatternUtils.ID_DEFAULT_STATUS_WIDGET) {
+                    mAppWidgetHost.deleteAppWidgetId(appWidgetId);
+                }
+            }
+        }
+
+        @Override
+        public void onRemoveViewAnimationCompleted() {
+            if (shouldEnableAddWidget()) {
+                mAppWidgetContainer.setAddWidgetEnabled(true);
             }
         }
     };
@@ -845,6 +919,7 @@ public class KeyguardHostView extends KeyguardViewBase {
         if (mViewStateManager != null) {
             mViewStateManager.showUsabilityHints();
         }
+        requestFocus();
     }
 
     @Override
@@ -864,6 +939,7 @@ public class KeyguardHostView extends KeyguardViewBase {
         if (cameraPage != null) {
             cameraPage.onScreenTurnedOff();
         }
+        clearFocus();
     }
 
     public void clearAppWidgetToShow() {
@@ -1033,15 +1109,6 @@ public class KeyguardHostView extends KeyguardViewBase {
         return widgetCount;
     }
 
-
-    private void setAddWidgetEnabled(boolean clickable) {
-        View addWidget = mAppWidgetContainer.findViewById(R.id.keyguard_add_widget);
-        if (addWidget != null) {
-            View addWidgetButton = addWidget.findViewById(R.id.keyguard_add_widget_view);
-            addWidgetButton.setEnabled(clickable);
-        }
-    }
-
     private void addDefaultWidgets() {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         inflater.inflate(R.layout.keyguard_transport_control_view, this, true);
@@ -1062,7 +1129,7 @@ public class KeyguardHostView extends KeyguardViewBase {
         // We currently disable cameras in safe mode because we support loading 3rd party
         // cameras we can't trust.  TODO: plumb safe mode into camera creation code and only
         // inflate system-provided camera?
-        if (!mSafeModeEnabled && !cameraDisabledByDpm()
+        if (!mSafeModeEnabled && !cameraDisabledByDpm() && mUserSetupCompleted
                 && mContext.getResources().getBoolean(R.bool.kg_enable_camera_default_widget)) {
             View cameraWidget =
                     CameraWidgetFrame.create(mContext, mCameraWidgetCallbacks, mActivityLauncher);

@@ -58,6 +58,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
+import android.graphics.Color;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.WifiDisplayStatus;
 import android.location.LocationManager;
@@ -189,6 +190,8 @@ public class QuickSettings {
     private TelephonyManager tm;
     private ConnectivityManager mConnService;
     private NfcAdapter mNfcAdapter;
+    private BluetoothAdapter mBluetoothAdapter;
+    private WifiManager mWifiManager;
 
     private BrightnessController mBrightnessController;
     private BluetoothController mBluetoothController;
@@ -270,6 +273,9 @@ public class QuickSettings {
         connManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mBluetoothState = new QuickSettingsModel.BluetoothState();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+
         mHandler = new Handler();
 
         Resources r = mContext.getResources();
@@ -492,54 +498,49 @@ public class QuickSettings {
 
     private QuickSettingsTileView getTile(int tile, ViewGroup parent, LayoutInflater inflater) {
         final Resources r = mContext.getResources();
+
         QuickSettingsTileView quick = null;
         switch (tile) {
-            case USER_TILE:
-                quick = (QuickSettingsTileView)
-                        inflater.inflate(R.layout.quick_settings_tile, parent, false);
-                quick.setContent(R.layout.quick_settings_tile_user, inflater);
-                quick.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getService().animateCollapsePanels();
-                        final UserManager um =
-                                (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-                        if (um.getUsers(true).size() > 1) {
-                            try {
-                                WindowManagerGlobal.getWindowManagerService().lockNow(
-                                        LockPatternUtils.USER_SWITCH_LOCK_OPTIONS);
-                            } catch (RemoteException e) {
-                                Log.e(TAG, "Couldn't show user switcher", e);
-                            }
-                        } else {
-                            Intent intent = ContactsContract.QuickContact.composeQuickContactsIntent(
-                                    mContext, v, ContactsContract.Profile.CONTENT_URI,
-                                    ContactsContract.QuickContact.MODE_LARGE, null);
-                            mContext.startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
+        case USER_TILE:
+            quick = (QuickSettingsTileView)
+                    inflater.inflate(R.layout.quick_settings_tile, parent, false);
+            quick.setContent(R.layout.quick_settings_tile_user, inflater);
+            quick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getService().animateCollapsePanels();
+
+                    final UserManager um =
+                            (UserManager) mContext.getSystemService(Context.USER_SERVICE);
+                    if (um.getUsers(true).size() > 1) {
+                        try {
+                            WindowManagerGlobal.getWindowManagerService().lockNow(null);
+                        } catch (RemoteException e) {
+                            Log.e(TAG, "Couldn't show user switcher", e);
                         }
+                    } else {
+
+                        Intent intent = ContactsContract.QuickContact.composeQuickContactsIntent(
+                                mContext, v, ContactsContract.Profile.CONTENT_URI,
+                                ContactsContract.QuickContact.MODE_LARGE, null);
+                        mContext.startActivityAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
                     }
-                });
-                quick.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        startSettingsActivity(android.provider.Settings.ACTION_SYNC_SETTINGS);
-                        return true;
-                    }
-                });
-                mModel.addUserTile(quick, new QuickSettingsModel.RefreshCallback() {
-                    @Override
-                    public void refreshView(QuickSettingsTileView view, State state) {
-                        UserState us = (UserState) state;
-                        ImageView iv = (ImageView) view.findViewById(R.id.user_imageview);
-                        TextView tv = (TextView) view.findViewById(R.id.user_textview);
-                        tv.setText(state.label);
-                        tv.setTextSize(1, mTileTextSize);
-                        iv.setImageDrawable(us.avatar);
-                        view.setContentDescription(mContext.getString(
-                                R.string.accessibility_quick_settings_user, state.label));
-                    }
-                });
-                break;
+                }
+            });
+            mModel.addUserTile(quick, new QuickSettingsModel.RefreshCallback() {
+                @Override
+                public void refreshView(QuickSettingsTileView view, State state) {
+                    UserState us = (UserState) state;
+                    ImageView iv = (ImageView) view.findViewById(R.id.user_imageview);
+                    TextView tv = (TextView) view.findViewById(R.id.user_textview);
+                    tv.setText(state.label);
+                    tv.setTextSize(1, mTileTextSize);
+                    iv.setImageDrawable(us.avatar);
+                    view.setContentDescription(mContext.getString(
+                            R.string.accessibility_quick_settings_user, state.label));
+                }
+            });
+            break;
             case CLOCK_TILE:
                 quick = (QuickSettingsTileView)
                         inflater.inflate(R.layout.quick_settings_tile, parent, false);
