@@ -118,7 +118,7 @@
                   android:label="@string/accessibility_desc_recent_apps"
                   android:theme="@*android:style/Theme.Holo"
                   android:excludeFromRecents="true"
-                  android:launchMode="singleInstance"
+                  android:launchMode="singleInstance">
         </activity>
         <activity android:name=".recent.RecentsActivity"
                 android:label="@string/appsh"
