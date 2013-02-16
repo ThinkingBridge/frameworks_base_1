@@ -71,6 +71,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout.LayoutParams;
+import android.content.pm.PackageManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 
 public class RecentsPanelView extends FrameLayout implements OnItemClickListener, RecentsCallback,
         StatusBarPanel, Animator.AnimatorListener {
@@ -97,7 +108,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private int mRecentItemLayoutId;
     private boolean mHighEndGfx;
     private ImageView mClearRecents;
-
+   
     public static interface RecentsScrollView {
         public int numItemsInOneScreenful();
         public void setAdapter(TaskDescriptionAdapter adapter);
@@ -308,11 +319,14 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             boolean firstScreenful, boolean animateIconOfFirstTask) {
         mAnimateIconOfFirstTask = animateIconOfFirstTask;
         mWaitingForWindowAnimation = animateIconOfFirstTask;
+        
+        
         if (show) {
             mWaitingToShow = true;
             refreshRecentTasksList(recentTaskDescriptions, firstScreenful);
             showIfReady();
             showMemDisplay();
+		
         } else {
             showImpl(false);
         }

@@ -585,5 +585,10 @@
     <string name="pie_hour_format_12">hh:mm</string>
     <string name="pie_hour_format_24">HH:mm</string>
     <string name="pie_am_pm">a</string>
-
+    <string name="recent_n">There are no shortcuts.</string>
+    <string name="recent_n1">Click add button to add shortcuts.</string>
+    <string name="delete">Delete</string>
+    <string name="chooseapp">Choose app</string>
+        <string name="appsh">app shortcut</string> 
+ 
 </resources>

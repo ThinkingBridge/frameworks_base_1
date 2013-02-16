@@ -30,11 +30,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.widget.HorizontalScrollView;
+import android.graphics.drawable.Drawable;
+import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.HorizontalScrollView;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.tablet.StatusBarPanel;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class RecentsActivity extends Activity {
     public static final String TOGGLE_RECENTS_INTENT = "com.android.systemui.recent.action.TOGGLE_RECENTS";
@@ -50,6 +60,15 @@ public class RecentsActivity extends Activity {
     private IntentFilter mIntentFilter;
     private boolean mShowing;
     private boolean mForeground;
+    private final ArrayList<String> stapplist = new ArrayList<String>();	
+	 public int n = 0;
+	 public int n2 = 0;
+	 public static String z = null;
+	 LinearLayout mScrollViewInner;
+	 HorizontalScrollView Scroll;
+	 int mId = 1;
+	 public int n3 = 0;
+	 Intent launchIntent = null;
     
     public static boolean mHomeForeground = false;
 
@@ -189,6 +208,7 @@ public class RecentsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+                                 super.onCreate(savedInstanceState);
         setContentView(R.layout.status_bar_recent_panel);
         mRecentsPanel = (RecentsPanelView) findViewById(R.id.recents_root);
         mRecentsPanel.setOnTouchListener(new TouchOutsideListener(mRecentsPanel));
@@ -206,8 +226,73 @@ public class RecentsActivity extends Activity {
         mIntentFilter.addAction(CLOSE_RECENTS_INTENT);
         mIntentFilter.addAction(WINDOW_ANIMATION_START_INTENT);
         registerReceiver(mIntentReceiver, mIntentFilter);
-        super.onCreate(savedInstanceState);
-    }
+mScrollViewInner = (LinearLayout) findViewById(R.id.scrollviewin);
+		final SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        TextView space1 = new TextView(getApplicationContext());
+        mScrollViewInner.addView(space1, new LayoutParams(
+          	     LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+          space1.setLayoutParams(new LinearLayout.LayoutParams(7, 7,
+          	     1.0f));
+        for(;;){
+        	n = n+1;
+        z = pref.getString("app"+String.valueOf(n), "").trim();  	 
+        if(z.length() == 0){
+        break;
+        }else{
+        	stapplist.add(z);       	
+            if(loadappicon(z) == null){
+            	
+            }else{
+            	ImageView app = new ImageView(getBaseContext());	
+            app = new ImageView(getApplicationContext());
+            app.setImageDrawable(loadappicon(z));
+            app.setTag(packagename(n));
+            app.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            app.setPadding(3,3,3,3);
+            app.setOnClickListener(new View.OnClickListener(){
+             public void onClick(View v){
+         		execapp((String) v.getTag());      				
+             }
+            });
+            TextView space = new TextView(getApplicationContext());
+            space.setId(mId++);
+            mScrollViewInner.addView(app, new LayoutParams(
+            	     LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            app.setLayoutParams(new LinearLayout.LayoutParams(90, 90,
+            	     1.0f));
+            mScrollViewInner.addView(space, new LayoutParams(
+           	     LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+           space.setLayoutParams(new LinearLayout.LayoutParams(5, 5,
+           	     1.0f));
+            }
+            	    
+        }
+	}
+        
+
+	}
+	public void execapp(String app){
+		Intent intent = new Intent();
+		intent = getPackageManager().getLaunchIntentForPackage(app);
+		startActivity(intent);
+
+	}
+
+	public String packagename(int a){
+           return stapplist.get(a-1);
+	}
+
+	public Drawable loadappicon(String packagename){
+		PackageManager pm = getApplicationContext().getPackageManager();
+		Drawable icon = null;
+		try {
+			icon = pm.getApplicationIcon(packagename);
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return icon;
+	}
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

@@ -206,62 +206,9 @@
     
     <!-- Pie time -->
     <string name="pie_date_format">ccc, yyyy dd MMM</string>
-    
-    <!--  ThinkingBridge -->
-
-    <!--  Target/Action Strings -->
-    <string name="shortcut_label">SystemUI 액션</string>
-    <string name="action_home">홈</string>
-    <string name="action_back">뒤로</string>
-    <string name="action_recents">최근앱</string>
-    <string name="action_screenshot">스크린샷</string>
-    <string name="action_menu">메뉴</string>
-    <string name="action_ime">IME 스위처 열기</string>
-    <string name="action_kill">앱 종료 하기</string>
-    <string name="action_power">전원</string>
-    <string name="action_search">검색</string>
-    <string name="action_notifications">알림</string>
-    <string name="action_lastapp">마지막 앱</string>
-    <string name="action_none">없음</string>
-
-    <string name="widgets">위젯</string>
-    <string name="toggle_navbar">네비바 - 토글</string>
-    <string name="toggle_widgets">위젯 - 토글</string>
-    <string name="toggle_ring_vib">소리/진동 - 토글</string>
-    <string name="toggle_ring_silent">소리/무음 - 토글</string>
-    <string name="toggle_ring_vib_silent">소리/진동/무음 - 토글</string>
-    <string name="app_killed_message">앱 종료됨</string>
-
-    <!--  Quick Settings -->
-    <string name="quick_settings_vibrate_on_label">진동 켜짐</string>
-    <string name="quick_settings_vibrate_off_label">진동 꺼짐</string>
-    <string name="quick_settings_silent_on_label">무음 켜짐</string>
-    <string name="quick_settings_silent_off_label">무음 꺼짐</string>
-    <string name="quick_settings_fcharge_on_label">빠른충전 켜짐</string>
-    <string name="quick_settings_fcharge_off_label">빠른충전 꺼짐</string>
-    <string name="quick_settings_torch_on_label">플래시 켜짐</string>
-    <string name="quick_settings_torch_off_label">플래시 꺼짐</string>
-    <string name="quick_settings_nfc_on_label">NFC 켜짐</string>
-    <string name="quick_settings_nfc_off_label">NFC 꺼짐</string>
-    <string name="quick_settings_wifi_tether_on_label">Wifi 테더링 켜짐</string>
-    <string name="quick_settings_wifi_tether_off_label">Wifi 테더링 꺼짐</string>
-    <string name="quick_settings_bt_tether_on_label">BT 테더링 켜짐</string>
-    <string name="quick_settings_bt_tether_off_label">BT 테더링 꺼짐</string>
-    <string name="quick_settings_usb_tether_on_label">USB 테더링 켜짐</string>
-    <string name="quick_settings_usb_tether_off_label">USB 테더링 꺼짐</string>
-    <string name="quick_settings_sync_on_label">동기화 켜짐</string>
-    <string name="quick_settings_sync_off_label">동기화 꺼짐</string>
-    <string name="quick_settings_twog_on_label">2g 켜짐</string>
-    <string name="quick_settings_twog_off_label">2g 꺼짐</string>
-    <string name="quick_settings_lte_on_label">LTE 켜짐</string>
-    <string name="quick_settings_lte_off_label">LTE 꺼짐</string>
-    <string name="quick_settings_gps_on_label">GPS 켜짐</string>
-    <string name="quick_settings_gps_off_label">GPS 꺼짐</string>
-    <string name="quick_settings_data_on_label">데이터 켜짐</string>
-    <string name="quick_settings_data_off_label">데이터 꺼짐</string>
-    <string name="quick_settings_navbar_hide_on_label">네비바 숨김 켜짐</string>
-    <string name="quick_settings_navbar_hide_off_label">네비바 숨김 꺼짐</string>
-    <string name="quick_settings_sound_on">소리 켜짐</string>
-    <string name="quick_settings_quiet_hours_on_label">취침시간 켜짐</string>
-    <string name="quick_settings_quiet_hours_off_label">취침시간 꺼짐</string>
+     <string name="recent_n">바로가기가 설정되지 않았습니다.</string>
+    <string name="recent_n1">버튼을 눌러 추가하세요.</string>
+    <string name="delete">삭제</string>
+    <string name="chooseapp">앱 선택</string>
+        <string name="appsh">앱 바로가기</string>
 </resources>
