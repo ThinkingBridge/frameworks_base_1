@@ -73,8 +73,7 @@
                   android:layout_width="50dp"
                   android:layout_height="50dp"
                   android:scaleType="center"
-                  android:layout_marginTop="25dp"
-                  android:gravity="left"
+                  android:layout_gravity="bottom|left"
                   android:src="@drawable/ic_notify_clear_pressed" />
                   
      <HorizontalScrollView android:id="@+id/appView"
