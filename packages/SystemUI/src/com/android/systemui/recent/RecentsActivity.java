@@ -39,6 +39,8 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.HorizontalScrollView;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.tablet.StatusBarPanel;
@@ -210,6 +212,7 @@ public class RecentsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
                                  super.onCreate(savedInstanceState);
         setContentView(R.layout.status_bar_recent_panel);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mRecentsPanel = (RecentsPanelView) findViewById(R.id.recents_root);
         mRecentsPanel.setOnTouchListener(new TouchOutsideListener(mRecentsPanel));
 

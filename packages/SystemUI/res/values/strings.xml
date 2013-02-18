@@ -592,5 +592,10 @@
     <string name="delete">Delete</string>
     <string name="chooseapp">Choose app</string>
     <string name="appsh">App shortcut</string> 
- 
+
+
+    <!-- for Sense 4.0 style multitasking mod -->
+    <string name="recent_apps_title">Recent apps</string>
+    <string name="avail">Available</string>
+
 </resources>

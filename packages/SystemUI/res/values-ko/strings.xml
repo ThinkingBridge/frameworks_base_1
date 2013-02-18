@@ -271,4 +271,6 @@
     <string name="quick_settings_sound_on">소리 켜짐</string>
     <string name="quick_settings_quiet_hours_on_label">취침시간 켜짐</string>
     <string name="quick_settings_quiet_hours_off_label">취침시간 꺼짐</string>
+    <string name="recent_apps_title">최근 앱</string>
+    <string name="avail">의 여유 메모리</string>
 </resources>

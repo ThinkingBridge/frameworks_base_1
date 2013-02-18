@@ -64,7 +64,6 @@ import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 import com.android.systemui.statusbar.tablet.StatusBarPanel;
 import com.android.systemui.statusbar.tablet.TabletStatusBar;
-
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -73,6 +72,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.HorizontalScrollView;
@@ -81,6 +81,14 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.content.pm.PackageManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Bitmap.Config;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.Shader.TileMode;
 
 
 public class RecentsPanelView extends FrameLayout implements OnItemClickListener, RecentsCallback,
@@ -108,6 +116,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private int mRecentItemLayoutId;
     private boolean mHighEndGfx;
     private ImageView mClearRecents;
+    Context context;
    
     public static interface RecentsScrollView {
         public int numItemsInOneScreenful();
@@ -170,7 +179,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             holder.iconView = (ImageView) convertView.findViewById(R.id.app_icon);
             holder.iconView.setImageBitmap(mRecentTasksLoader.getDefaultIcon());
             holder.labelView = (TextView) convertView.findViewById(R.id.app_label);
-            holder.calloutLine = convertView.findViewById(R.id.recents_callout_line);
             holder.descriptionView = (TextView) convertView.findViewById(R.id.app_description);
 
             convertView.setTag(holder);
@@ -204,11 +212,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                         holder.labelView.setAlpha(1f);
                         holder.labelView.setTranslationX(0f);
                         holder.labelView.setTranslationY(0f);
-                        if (holder.calloutLine != null) {
-                            holder.calloutLine.setAlpha(1f);
-                            holder.calloutLine.setTranslationX(0f);
-                            holder.calloutLine.setTranslationY(0f);
-                        }
                     }
                     mItemToAnimateInWhenWindowAnimationIsFinished = holder;
                     final int translation = -getResources().getDimensionPixelSize(
@@ -219,8 +222,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                         holder.iconView.setTranslationX(translation);
                         holder.labelView.setAlpha(0f);
                         holder.labelView.setTranslationX(translation);
-                        holder.calloutLine.setAlpha(0f);
-                        holder.calloutLine.setTranslationX(translation);
                     } else {
                         holder.iconView.setAlpha(0f);
                         holder.iconView.setTranslationY(translation);
@@ -255,12 +256,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             holder.labelView.setAlpha(1f);
             holder.labelView.setTranslationX(0f);
             holder.labelView.setTranslationY(0f);
-            if (holder.calloutLine != null) {
-                holder.calloutLine.setAlpha(1f);
-                holder.calloutLine.setTranslationX(0f);
-                holder.calloutLine.setTranslationY(0f);
-                holder.calloutLine.animate().cancel();
-            }
             holder.taskDescription = null;
             holder.loadedThumbnailAndIcon = false;
         }
@@ -517,7 +512,32 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             // Should remove the default image in the frame
             // that this now covers, to improve scrolling speed.
             // That can't be done until the anim is complete though.
-            h.thumbnailViewImage.setImageBitmap(thumbnail);
+             final int reflectionGap = 4;
+             int width = thumbnail.getWidth();
+             int height = thumbnail.getHeight();
+	
+             Matrix matrix = new Matrix();
+             matrix.preScale(1, -1);
+	
+             Bitmap reflectionImage = Bitmap.createBitmap(thumbnail, 0, height * 2 / 3, width, height/3, matrix, false);	    
+             Bitmap bitmapWithReflection = Bitmap.createBitmap(width, (height + height/3), Config.ARGB_8888);
+	      
+             Canvas canvas = new Canvas(bitmapWithReflection);
+             canvas.drawBitmap(thumbnail, 0, 0, null);
+             Paint defaultPaint = new Paint();
+             canvas.drawRect(0, height, width, height + reflectionGap, defaultPaint);
+             canvas.drawBitmap(reflectionImage, 0, height + reflectionGap, null);
+	        
+             Paint paint = new Paint(); 
+             LinearGradient shader = new LinearGradient(0, thumbnail.getHeight(), 0, 
+             bitmapWithReflection.getHeight() + reflectionGap, 0x70ffffff, 0x00ffffff, 
+             TileMode.CLAMP); 
+             paint.setShader(shader); 
+             paint.setXfermode(new PorterDuffXfermode(Mode.DST_IN)); 
+             canvas.drawRect(0, height, width, 
+             bitmapWithReflection.getHeight() + reflectionGap, paint); 
+ 
+             h.thumbnailViewImage.setImageBitmap(bitmapWithReflection);
 
             // scale the image to fill the full width of the ImageView. do this only if
             // we haven't set a bitmap before, or if the bitmap size has changed
@@ -525,7 +545,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                 h.thumbnailViewImageBitmap.getWidth() != thumbnail.getWidth() ||
                 h.thumbnailViewImageBitmap.getHeight() != thumbnail.getHeight()) {
                 if (mFitThumbnailToXY) {
-                    h.thumbnailViewImage.setScaleType(ScaleType.FIT_XY);
+                     h.thumbnailViewImage.setRotationY(25.0f);
                 } else {
                     Matrix scaleMatrix = new Matrix();
                     float scale = mThumbnailWidth / (float) thumbnail.getWidth();
@@ -587,7 +607,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             final ViewHolder holder = mItemToAnimateInWhenWindowAnimationIsFinished;
             final TimeInterpolator cubic = new DecelerateInterpolator(1.5f);
             for (View v :
-                new View[] { holder.iconView, holder.labelView, holder.calloutLine }) {
+                new View[] { holder.iconView, holder.labelView}) {
                 if (v != null) {
                     v.animate().translationX(0).translationY(0).alpha(1f).setStartDelay(startDelay)
                             .setDuration(duration).setInterpolator(cubic);
@@ -823,7 +843,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     memBar.setMax(totalMem);
 
     int availMem = Integer.parseInt(getAvailMemory());
-    memText.setText("Free RAM: " + String.valueOf(availMem) + "MB");
+    memText.setText(String.valueOf(availMem) + "MB "+getResources().getString(R.string.avail));
     memBar.setProgress(totalMem - availMem);
     return true;
     }
