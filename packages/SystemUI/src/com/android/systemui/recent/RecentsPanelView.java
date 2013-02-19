@@ -695,6 +695,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
                     mClearRecents.setVisibility(View.GONE);
         } 
         setContentDescription(recentAppsAccessibilityDescription);
+        showMemDisplay();
     }
 
     public boolean simulateClick(int persistentTaskId) {
