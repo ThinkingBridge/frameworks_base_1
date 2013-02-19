@@ -855,8 +855,11 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     int availMem = Integer.parseInt(getAvailMemory());
     memText.setText(String.valueOf(availMem) + "MB "+getResources().getString(R.string.avail));
     memBar.setProgress(totalMem - availMem);
-    if(mRecentsContainer != null && norecent != true){
-    ReText.setText(getResources().getString(R.string.recent_apps_title)+" "+String.valueOf(mRecentsContainer.getChildCount()) + getResources().getString(R.string.recent_apps_title2));
+    try{
+    if(container.getChildCount() != 0 && container != null && norecent != true){
+    ReText.setText(getResources().getString(R.string.recent_apps_title)+" "+String.valueOf(container.getChildCount()) + getResources().getString(R.string.recent_apps_title2));
+    }
+    }catch(NullPointerException e){
     }
     return true;
     }
