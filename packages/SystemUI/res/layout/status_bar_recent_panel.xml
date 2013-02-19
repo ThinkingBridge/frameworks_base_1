@@ -17,7 +17,6 @@
 ** limitations under the License.
 */
 -->
-
 <com.android.systemui.recent.RecentsPanelView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
@@ -28,7 +27,6 @@
     >
     <FrameLayout
         android:id="@+id/recents_bg_protect"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerVertical="true">
@@ -89,14 +87,6 @@
                   android:layout_gravity="top|left"
                   android:layout_marginTop="5dp"
                   android:layout_marginRight="5dp" />
-        <ImageView
-            android:id="@+id/recents_clear"
-            android:clickable="true"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="center"
-             android:layout_gravity="bottom|center"
-            android:src="@drawable/ic_notify_clear_pressed" />
             
         <HorizontalScrollView android:id="@+id/appView"
                   android:layout_width="match_parent"
@@ -116,6 +106,14 @@
         </HorizontalScrollView>
 
     </FrameLayout>
+    <Button
+        android:id="@+id/recents_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_alignParentBottom="true"
+        android:text="@string/clearall" 
+        style="?android:attr/buttonBarButtonStyle" />
     
     <include layout="@layout/status_bar_no_recent_apps"
         android:id="@+id/recents_no_apps"

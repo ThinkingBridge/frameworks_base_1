@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License");no
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -89,6 +89,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Shader.TileMode;
+import android.widget.Button;
 
 
 public class RecentsPanelView extends FrameLayout implements OnItemClickListener, RecentsCallback,
@@ -115,7 +116,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private boolean mFitThumbnailToXY;
     private int mRecentItemLayoutId;
     private boolean mHighEndGfx;
-    private ImageView mClearRecents;
+    public Button mClearRecents;
     Context context;
    
     public static interface RecentsScrollView {
@@ -459,7 +460,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         mRecentsScrim = findViewById(R.id.recents_bg_protect);
         mRecentsNoApps = findViewById(R.id.recents_no_apps);
 
-        mClearRecents = (ImageView) findViewById(R.id.recents_clear);
+        mClearRecents = (Button) findViewById(R.id.recents_clear);
         if (mClearRecents != null){
             mClearRecents.setOnClickListener(new OnClickListener() {
                 @Override
@@ -607,7 +608,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             final ViewHolder holder = mItemToAnimateInWhenWindowAnimationIsFinished;
             final TimeInterpolator cubic = new DecelerateInterpolator(1.5f);
             for (View v :
-                new View[] { holder.iconView, holder.labelView}) {
+                new View[] { holder.labelView, holder.iconView}) {
                 if (v != null) {
                     v.animate().translationX(0).translationY(0).alpha(1f).setStartDelay(startDelay)
                             .setDuration(duration).setInterpolator(cubic);
@@ -855,7 +856,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         long availableMem = memInfo.availMem / 1048576L;
         return String.valueOf(availableMem);
     }
-
     public int getTotalMemory() {
         String str1 = "/proc/meminfo";
         String str2;
