@@ -596,7 +596,7 @@
 
     <!-- for Sense 4.0 style multitasking mod -->
     <string name="recent_apps_title"></string>
-    <string name="recent_apps_title2"> Recent apps</string>
+    <string name="recent_apps_title2">" Recent apps"</string>
     <string name="avail">Available</string>
     <string name="clearall">Clear all</string>
 </resources>
