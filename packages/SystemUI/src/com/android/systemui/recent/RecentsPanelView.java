@@ -684,6 +684,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         if (numRecentApps == 0) {
             recentAppsAccessibilityDescription =
                 getResources().getString(R.string.status_bar_no_recent_apps);
+        } else if (numRecentApps == 1){
+                    mClearRecents.setVisibility(View.GONE);
         } else {
             recentAppsAccessibilityDescription = getResources().getQuantityString(
                 R.plurals.status_bar_accessibility_recent_apps, numRecentApps, numRecentApps);
