@@ -233,8 +233,6 @@ public final class ShutdownThread extends Thread {
         mReboot = true;
         mRebootSafeMode = false;
         mRebootReason = reason;
-        if (reason.equals("hotreboot"))
-        	mRebootHot = true;
         shutdownInner(context, confirm);
     }
 
