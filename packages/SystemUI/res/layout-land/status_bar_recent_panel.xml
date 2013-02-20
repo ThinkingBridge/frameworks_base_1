@@ -72,13 +72,6 @@
 	    android:layout_height="wrap_content"
 	    android:text="@string/recent_apps_title"
 	/>
-     <ProgressBar android:id="@+id/recents_memory_bar"
-		style="?android:attr/progressBarStyleHorizontal"
-                  android:layout_height="wrap_content"
-                  android:layout_width="match_parent"
-                  android:layout_gravity="top|left"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginRight="5dp"/>
 
         <TextView android:id="@+id/recents_memory_text"
             android:textSize="18.0dip"
