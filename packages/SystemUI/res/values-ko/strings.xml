@@ -206,9 +206,6 @@
     
     <!--  ThinkingBridge -->
     
-    <!-- Pie time -->
-    <string name="pie_date_format">ccc, yyyy dd MMM</string>
-    
     <!-- Recent Shortcuts -->
     <string name="recent_n">바로가기가 설정되지 않았습니다.</string>
     <string name="recent_n1">버튼을 눌러 추가하세요.</string>
