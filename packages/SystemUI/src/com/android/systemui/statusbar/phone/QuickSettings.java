@@ -1546,7 +1546,6 @@ public class QuickSettings {
 		       	TextView tv = (TextView) view.findViewById(R.id.quiethours_textview);
 			            tv.setText(state.label);
                         tv.setTextSize(1, mTileTextSize);
-                        tv.setTextColor(mTileText);
                         tv.setCompoundDrawablesWithIntrinsicBounds(0, state.iconId, 0, 0);
                     }
                 });
