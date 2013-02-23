@@ -1861,6 +1861,7 @@ public class QuickSettings {
         reloadFavContactInfo();
         mModel.refreshNavBarHideTile();
         mModel.refreshTorchTile();
+        mModel.refreshQuietHoursTile();
     }
 
     class SettingsObserver extends ContentObserver {
@@ -1884,6 +1885,9 @@ public class QuickSettings {
                     false, this);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.TORCH_STATE),
+                    false, this);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QUIET_HOURS_ENABLED),
                     false, this);
             updateSettings();
         }
