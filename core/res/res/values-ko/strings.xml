@@ -1460,7 +1460,7 @@
     <!-- ThinkingBridge -->
     
     <!-- Back to kill -->
-    <string name="app_killed_message">애플리케이션 종료.</string>
+    <string name="app_killed_message">%1$s 애플리케이션 종료.</string>
     
     <!-- Power menu -->
     

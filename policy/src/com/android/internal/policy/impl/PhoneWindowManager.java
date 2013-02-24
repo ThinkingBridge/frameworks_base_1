@@ -35,6 +35,7 @@ import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.pm.PackageInfo;
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -885,6 +886,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 boolean targetKilled = false;
                 IActivityManager am = ActivityManagerNative.getDefault();
                 List<RunningAppProcessInfo> apps = am.getRunningAppProcesses();
+                String appName = null;
+		  PackageManager pm = mContext.getPackageManager();
+                List<PackageInfo> lists = mContext.getPackageManager().getInstalledPackages(PackageManager.PERMISSION_GRANTED);
                 for (RunningAppProcessInfo appInfo : apps) {
                     int uid = appInfo.uid;
                     // Make sure it's a foreground user application (not system,
@@ -894,6 +898,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         if (appInfo.pkgList != null && (appInfo.pkgList.length > 0)) {
                             for (String pkg : appInfo.pkgList) {
                                 if (!pkg.equals("com.android.systemui") && !pkg.equals(defaultHomePackage)) {
+                                	for (PackageInfo list : lists) {
+						if(list.packageName.equals(appInfo.processName)) {
+							appName = String.valueOf(list.applicationInfo.loadLabel(pm));
+							break;
+						}
+						if (appName != null)
+							break;
+                                		}
                                     am.forceStopPackage(pkg, UserHandle.USER_CURRENT);
                                     targetKilled = true;
                                     break;
@@ -905,8 +917,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         }
                     }
                     if (targetKilled) {
+			   Resources res1 = mContext.getResources();
+			   String text = String.format(res1.getString(R.string.app_killed_message), appName); 
                         performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, false);
-                        Toast.makeText(mContext, R.string.app_killed_message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, text, text.length()).show();
                         break;
                     }
                 }

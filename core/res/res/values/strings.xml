@@ -4070,7 +4070,7 @@
     <string name="hot_reboot_progress">Restarting android framework\u2026</string>
     
     <!-- Back to kill -->
-    <string name="app_killed_message">Application killed.</string>
+    <string name="app_killed_message">%1$s Application killed.</string>
 
     <!-- In WiFi notification -->
     <string name="notify_turn_wifi_off_title">Turn Wi-Fi off</string>
