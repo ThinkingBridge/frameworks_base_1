@@ -274,9 +274,4 @@
     <string name="quick_settings_quickrecord">빠른 녹음</string>
     <string name="quick_settings_nofile">길게 눌러 녹음</string>
     
-    <!-- Recent -->
-    <string name="recent_apps_title">"최근 앱 "</string>
-    <string name="recent_apps_title2">" 개"</string>
-    <string name="avail">의 여유 메모리</string>
-    <string name="clearall">모두 종료</string>
 </resources>
