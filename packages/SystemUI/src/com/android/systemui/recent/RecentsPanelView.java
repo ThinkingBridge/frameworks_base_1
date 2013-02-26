@@ -691,6 +691,9 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             recentAppsAccessibilityDescription = getResources().getQuantityString(
                 R.plurals.status_bar_accessibility_recent_apps, numRecentApps, numRecentApps);
         }
+        if (mRecentTaskDescriptions.size() <= 1){
+                    mClearRecents.setVisibility(View.GONE);
+        } 
         setContentDescription(recentAppsAccessibilityDescription);
         showMemDisplay();
     }
@@ -856,9 +859,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     if(mRecentTaskDescriptions.size() != 0){
     ReText.setText(getResources().getString(R.string.recent_apps_title)+String.valueOf(mRecentTaskDescriptions.size())+getResources().getString(R.string.recent_apps_title2));
     }
-    if (mRecentTaskDescriptions.size() <= 1){
-    mClearRecents.setVisibility(View.INVISIBLE);
-    } 
     }catch(NullPointerException e){
     }
     return true;
