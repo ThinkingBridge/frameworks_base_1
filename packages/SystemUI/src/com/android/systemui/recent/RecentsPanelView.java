@@ -840,16 +840,25 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
 
     final TextView memText = (TextView) findViewById(R.id.recents_memory_text);
     final TextView ReText = (TextView) findViewById(R.id.app_tile_title);
+    final ProgressBar memBar = (ProgressBar) findViewById(R.id.recents_memory_bar);
     
     ReText.setVisibility(View.VISIBLE);
     memText.setVisibility(View.VISIBLE);
+    memBar.setVisibility(View.VISIBLE);
+
     int totalMem = getTotalMemory();
+    memBar.setMax(totalMem);
+
     int availMem = Integer.parseInt(getAvailMemory());
     memText.setText(String.valueOf(availMem) + "MB "+getResources().getString(R.string.avail));
+    memBar.setProgress(totalMem - availMem);
     try{
     if(mRecentTaskDescriptions.size() != 0){
     ReText.setText(getResources().getString(R.string.recent_apps_title)+String.valueOf(mRecentTaskDescriptions.size())+getResources().getString(R.string.recent_apps_title2));
     }
+    if (mRecentTaskDescriptions.size() <= 1){
+    mClearRecents.setVisibility(View.INVISIBLE);
+    } 
     }catch(NullPointerException e){
     }
     return true;
