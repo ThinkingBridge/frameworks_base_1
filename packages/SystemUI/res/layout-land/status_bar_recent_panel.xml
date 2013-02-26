@@ -88,6 +88,13 @@
 	    android:layout_below="@id/app_tile_title"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"/>
+     <ImageView android:id="@+id/recents_clear"
+                  android:clickable="true"
+                  android:layout_width="50dp"
+                  android:layout_height="50dp"
+                  android:scaleType="center"
+                  android:layout_gravity="bottom|center"
+                  android:src="@drawable/ic_notify_clear_pressed" />
                   
      <HorizontalScrollView android:id="@+id/appView"
                   android:layout_width="match_parent"
@@ -106,14 +113,6 @@
      </HorizontalScrollView>
 
     </FrameLayout>
-    <Button
-        android:id="@+id/recents_clear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_alignParentBottom="true"
-        android:text="@string/clearall" 
-        style="?android:attr/buttonBarButtonStyle" />
 
     <include layout="@layout/status_bar_no_recent_apps"
         android:id="@+id/recents_no_apps"
