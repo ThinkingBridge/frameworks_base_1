@@ -120,6 +120,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     public int numRecentApps;
     Context context;
     public ViewGroup container; 
+    public boolean norecent;
    
     public static interface RecentsScrollView {
         public int numItemsInOneScreenful();
@@ -183,7 +184,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             holder.iconView.setImageBitmap(mRecentTasksLoader.getDefaultIcon());
             holder.labelView = (TextView) convertView.findViewById(R.id.app_label);
             holder.descriptionView = (TextView) convertView.findViewById(R.id.app_description);
-
 
             convertView.setTag(holder);
             return convertView;
@@ -693,6 +693,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         }
         if (numRecentApps == 1){
                     mClearRecents.setVisibility(View.GONE);
+                    norecent = true;
         } 
         setContentDescription(recentAppsAccessibilityDescription);
     }
@@ -855,8 +856,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     memText.setText(String.valueOf(availMem) + "MB "+getResources().getString(R.string.avail));
     memBar.setProgress(totalMem - availMem);
     try{
-    if(numRecentApps == 0){
-    ReText.setText(getResources().getString(R.string.recent_apps_title)+" "+String.valueOf(mRecentTaskDescriptions.size()) + getResources().getString(R.string.recent_apps_title2));
+    if(container.getChildCount() != 0 && container != null && norecent != true){
+    ReText.setText(getResources().getString(R.string.recent_apps_title)+" "+String.valueOf(container.getChildCount()) + getResources().getString(R.string.recent_apps_title2));
     }
     }catch(NullPointerException e){
     }
