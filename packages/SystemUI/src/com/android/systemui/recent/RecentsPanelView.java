@@ -117,10 +117,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private int mRecentItemLayoutId;
     private boolean mHighEndGfx;
     public Button mClearRecents;
-    public int numRecentApps;
     Context context;
-    public ViewGroup container; 
-    public boolean norecent;
    
     public static interface RecentsScrollView {
         public int numItemsInOneScreenful();
@@ -561,7 +558,7 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
             if (show && h.thumbnailView.getVisibility() != View.VISIBLE) {
                 if (anim) {
                     h.thumbnailView.setAnimation(
-                    AnimationUtils.loadAnimation(mContext, R.anim.recent_appear));
+                            AnimationUtils.loadAnimation(mContext, R.anim.recent_appear));
                 }
                 h.thumbnailView.setVisibility(View.VISIBLE);
             }
@@ -681,13 +678,12 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         mRecentsContainer.setVisibility(items > 0 ? View.VISIBLE : View.GONE);
 
         // Set description for accessibility
-        numRecentApps = mRecentTaskDescriptions != null
+        int numRecentApps = mRecentTaskDescriptions != null
                 ? mRecentTaskDescriptions.size() : 0;
         String recentAppsAccessibilityDescription;
         if (numRecentApps == 0) {
             recentAppsAccessibilityDescription =
                 getResources().getString(R.string.status_bar_no_recent_apps);
-                norecent = true;
         } else {
             recentAppsAccessibilityDescription = getResources().getQuantityString(
                 R.plurals.status_bar_accessibility_recent_apps, numRecentApps, numRecentApps);
@@ -842,10 +838,8 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     private boolean showMemDisplay() {
 
     final TextView memText = (TextView) findViewById(R.id.recents_memory_text);
-    final TextView ReText = (TextView) findViewById(R.id.app_tile_title);
     final ProgressBar memBar = (ProgressBar) findViewById(R.id.recents_memory_bar);
-    
-    ReText.setVisibility(View.VISIBLE);
+
     memText.setVisibility(View.VISIBLE);
     memBar.setVisibility(View.VISIBLE);
 
@@ -855,9 +849,6 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
     int availMem = Integer.parseInt(getAvailMemory());
     memText.setText(String.valueOf(availMem) + "MB "+getResources().getString(R.string.avail));
     memBar.setProgress(totalMem - availMem);
-    if(mRecentsContainer != null && norecent != true){
-    ReText.setText(getResources().getString(R.string.recent_apps_title)+String.valueOf(mRecentsContainer.getChildCount()) + " "+ getResources().getString(R.string.recent_apps_title2));
-    }
     return true;
     }
 
