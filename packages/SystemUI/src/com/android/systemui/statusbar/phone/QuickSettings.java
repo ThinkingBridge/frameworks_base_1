@@ -723,7 +723,7 @@ public class QuickSettings {
                     quick.setOnClickListener(new View.OnClickListener() {
                          @Override
                         public void onClick(View v) {
-                             getService().animateCollapsePanels();
+                            getService().animateCollapsePanels();
                             connManager.setMobileDataEnabled(connManager.getMobileDataEnabled() ? false : true);
                             String strData = connManager.getMobileDataEnabled() ?
                                     r.getString(R.string.quick_settings_data_off_label)
@@ -1613,16 +1613,16 @@ public class QuickSettings {
                 break;
             case MEMORY_TILE:
             	quick = (QuickSettingsTileView)
-                inflater.inflate(R.layout.quick_settings_tile, parent, false);
-            	quick.setContent(R.layout.quick_settings_tile_mwmory, inflater);
+                        inflater.inflate(R.layout.quick_settings_tile, parent, false);
+            	quick.setContent(R.layout.quick_settings_tile_memory, inflater);
             	quick.setOnClickListener(new View.OnClickListener() {
             		@Override
             		public void onClick(View v) {
+            			getService().animateCollapsePanels();
             			Intent i = new Intent(Intent.ACTION_MAIN);
             			i.setComponent(new ComponentName("com.android.settings","com.android.settings.RunningServices"));
             			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             			mContext.startActivity(i);
-            			mBar.collapseAllPanels(true);
             		}
                 });
                 mModel.addMemoryTile(quick, new QuickSettingsModel.RefreshCallback() {
