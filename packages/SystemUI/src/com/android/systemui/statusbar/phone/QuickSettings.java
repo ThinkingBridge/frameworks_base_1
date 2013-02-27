@@ -1618,11 +1618,11 @@ public class QuickSettings {
             	quick.setOnClickListener(new View.OnClickListener() {
             		@Override
             		public void onClick(View v) {
-            			getService().animateCollapsePanels();
             			Intent i = new Intent(Intent.ACTION_MAIN);
             			i.setComponent(new ComponentName("com.android.settings","com.android.settings.RunningServices"));
             			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             			mContext.startActivity(i);
+            			mBar.collapseAllPanels(true);
             		}
                 });
                 mModel.addMemoryTile(quick, new QuickSettingsModel.RefreshCallback() {
