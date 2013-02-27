@@ -45,6 +45,7 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
+import com.android.internal.util.MemInfoReader;
 import com.android.internal.view.RotationPolicy;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.systemui.R;
@@ -75,7 +76,7 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
 
     // Sett InputMethoManagerService
     private static final String TAG_TRY_SUPPRESSING_IME_SWITCHER = "TrySuppressingImeSwitcher";
-
+    
     private String mFastChargePath;
     
     private int dataState = -1;
@@ -245,6 +246,10 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     private QuickSettingsTileView mBatteryTile;
     private RefreshCallback mBatteryCallback;
     private BatteryState mBatteryState = new BatteryState();
+    
+    private QuickSettingsTileView mMemoryTile;
+    private RefreshCallback mMemoryCallback;
+    private State mMemoryState = new State();
 
     private QuickSettingsTileView mLocationTile;
     private RefreshCallback mLocationCallback;
@@ -714,6 +719,42 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
             onBluetoothStateChange(mBluetoothState.enabled);
         }
     }
+    
+    // Ram
+    void addMemoryTile(QuickSettingsTileView view, RefreshCallback cb) {
+        mMemoryTile = view;
+        mMemoryCallback = cb;
+        refreshMemoryTile();
+        mHandler.postDelayed(new Runnable() { @Override public void run() { 
+            updateMemoryState();
+            refreshMemoryTile();
+            
+            if (mMemoryTile != null)
+                mHandler.postDelayed(this, 20000);
+                
+        } }, 20000);
+    }
+    
+    void refreshMemoryTile() {
+        if (mMemoryCallback != null)
+            mMemoryCallback.refreshView(mMemoryTile);
+    }
+    
+    void updateMemoryState() {
+        mMemInfoReader.readMemInfo();
+        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+        
+        int availMem = (int)((mMemInfoReader.getFreeSize() + mMemInfoReader.getCachedSize()
+            - memInfo.secondaryServerThreshold) / 1048576);
+        if (availMem < 0) {
+            availMem = 0;
+        }
+        
+        mMemoryState.label = freeMem + "MB";
+        mMemoryState.iconId = R.drawable.ic_qs_memory;
+    }
+    
+    // Weather
 
     // Battery
     void addBatteryTile(QuickSettingsTileView view, RefreshCallback cb) {

@@ -141,6 +141,7 @@ public class QuickSettings {
     private static final int QUIETHOURS_TILE  = 25;
     private static final int NAVBAR_HIDE_TILE = 26;
     private static final int QUICKRECORD_TILE = 27;
+    private static final int MEMORY_TILE = 28;
 
     public static final int STATE_IDLE = 0;
     public static final int STATE_PLAYING = 1;
@@ -177,6 +178,8 @@ public class QuickSettings {
     public static final String QUIETHOURS_TOGGLE = "QUIETHOURS";
     public static final String NAVBAR_HIDE_TOGGLE = "NAVBARHIDE";
     public static final String QUICKRECORD_TOGGLE = "QUICKRECORD";
+    public static final String MEMORY_TOGGLE = "MEMORY";
+    
     private static final String LOG_TAG = "AudioRecord";
     private static String mQuickAudio = null;
 
@@ -268,6 +271,7 @@ public class QuickSettings {
             toggleMap.put(QUIETHOURS_TOGGLE, QUIETHOURS_TILE);
             toggleMap.put(NAVBAR_HIDE_TOGGLE, NAVBAR_HIDE_TILE);
             toggleMap.put(QUICKRECORD_TOGGLE, QUICKRECORD_TILE);
+            toggleMap.put(MEMORY_TOGGLE, MEMORY_TILE);
             //toggleMap.put(BT_TETHER_TOGGLE, BT_TETHER_TILE);
         }
         return toggleMap;
@@ -1601,6 +1605,30 @@ public class QuickSettings {
                     @Override
                     public void refreshView(QuickSettingsTileView view, State state) {
                         TextView tv = (TextView) view.findViewById(R.id.quickrecord_textview);
+                        tv.setText(state.label);
+                        tv.setTextSize(1, mTileTextSize);
+                        tv.setCompoundDrawablesWithIntrinsicBounds(0, state.iconId, 0, 0);
+                    }
+                });
+                break;
+            case MEMORY_TILE:
+            	quick = (QuickSettingsTileView)
+                inflater.inflate(R.layout.quick_settings_tile, parent, false);
+            	quick.setContent(R.layout.quick_settings_tile_mwmory, inflater);
+            	quick.setOnClickListener(new View.OnClickListener() {
+            		@Override
+            		public void onClick(View v) {
+            			Intent i = new Intent(Intent.ACTION_MAIN);
+            			i.setComponent(new ComponentName("com.android.settings","com.android.settings.RunningServices"));
+            			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            			mContext.startActivity(i);
+            			mBar.collapseAllPanels(true);
+            		}
+                });
+                mModel.addMemoryTile(quick, new QuickSettingsModel.RefreshCallback() {
+                    @Override
+                    public void refreshView(QuickSettingsTileView view, State state) {
+                        TextView tv = (TextView) view.findViewById(R.id.memory_textview);
                         tv.setText(state.label);
                         tv.setTextSize(1, mTileTextSize);
                         tv.setCompoundDrawablesWithIntrinsicBounds(0, state.iconId, 0, 0);
