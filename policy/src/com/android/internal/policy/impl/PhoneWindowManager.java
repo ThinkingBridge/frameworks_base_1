@@ -887,7 +887,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 IActivityManager am = ActivityManagerNative.getDefault();
                 List<RunningAppProcessInfo> apps = am.getRunningAppProcesses();
                 String appName = null;
-		  PackageManager pm = mContext.getPackageManager();
+                PackageManager pm = mContext.getPackageManager();
                 List<PackageInfo> lists = mContext.getPackageManager().getInstalledPackages(PackageManager.PERMISSION_GRANTED);
                 for (RunningAppProcessInfo appInfo : apps) {
                     int uid = appInfo.uid;
@@ -899,10 +899,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             for (String pkg : appInfo.pkgList) {
                                 if (!pkg.equals("com.android.systemui") && !pkg.equals(defaultHomePackage)) {
                                 	for (PackageInfo list : lists) {
-						if(list.packageName.equals(appInfo.processName)) {
-							appName = String.valueOf(list.applicationInfo.loadLabel(pm));
-							break;
-						}
+                                		if(list.packageName.equals(appInfo.processName)) {
+                                			appName = String.valueOf(list.applicationInfo.loadLabel(pm));
+                                			break;
+                                		}
 						if (appName != null)
 							break;
                                 		}

@@ -1234,8 +1234,6 @@ public class PhoneStatusBar extends BaseStatusBar {
             }
             mCarrierLabel.animate()
                 .alpha(makeVisible ? 1f : 0f)
-                //.setStartDelay(makeVisible ? 500 : 0)
-                //.setDuration(makeVisible ? 750 : 100)
                 .setDuration(150)
                 .setListener(makeVisible ? null : new AnimatorListenerAdapter() {
                     @Override
