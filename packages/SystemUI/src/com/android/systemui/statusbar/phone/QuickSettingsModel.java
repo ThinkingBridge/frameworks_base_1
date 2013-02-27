@@ -77,6 +77,7 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     // Sett InputMethoManagerService
     private static final String TAG_TRY_SUPPRESSING_IME_SWITCHER = "TrySuppressingImeSwitcher";
     
+    private MemInfoReader mMemInfoReader = new MemInfoReader();
     private String mFastChargePath;
     
     private int dataState = -1;
@@ -720,10 +721,11 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         }
     }
     
-    // Ram
+    // Ram memory
     void addMemoryTile(QuickSettingsTileView view, RefreshCallback cb) {
         mMemoryTile = view;
         mMemoryCallback = cb;
+        updateMemoryState();
         refreshMemoryTile();
         mHandler.postDelayed(new Runnable() { @Override public void run() { 
             updateMemoryState();
@@ -737,7 +739,7 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     
     void refreshMemoryTile() {
         if (mMemoryCallback != null)
-            mMemoryCallback.refreshView(mMemoryTile);
+            mMemoryCallback.refreshView(mMemoryTile, mMemoryState);
     }
     
     void updateMemoryState() {
@@ -745,12 +747,12 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
         
         int availMem = (int)((mMemInfoReader.getFreeSize() + mMemInfoReader.getCachedSize()
-            - memInfo.secondaryServerThreshold) / 1048576);
+            - memInfo.secondaryServerThreshold) / 1048576); // = 1024*1024????
         if (availMem < 0) {
             availMem = 0;
         }
         
-        mMemoryState.label = freeMem + "MB";
+        mMemoryState.label = availMem + "MB Free";
         mMemoryState.iconId = R.drawable.ic_qs_memory;
     }
     
