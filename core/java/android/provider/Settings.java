@@ -3222,6 +3222,18 @@ public final class Settings {
          * @hide
          */
         public static final String UI_FORCE_OVERFLOW_BUTTON = "ui_force_overflow_button";
+        
+        /**
+         * Enable/Disable screenshot sound for android 4.2.2
+         * @hide
+         */
+        public static final String SCREENSHOT_SOUND = "screenshot_sound";
+        
+        /**
+         * Screenshot delay
+         * @hide
+         */
+        public static final String SCREENSHOT_DELAY = "screenshot_delay";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
