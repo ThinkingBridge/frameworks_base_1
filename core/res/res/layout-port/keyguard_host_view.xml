@@ -61,6 +61,9 @@
               android:layout_height="match_parent"
               androidprv:layout_childType="scrim"
               android:background="#99000000" />
+        
+        <include layout="@layout/keyguard_multi_user_selector"
+              android:gravity="bottom|center_horizontal" />
 
         <com.android.internal.policy.impl.keyguard.KeyguardSecurityContainer
             android:id="@+id/keyguard_security_container"
@@ -92,9 +95,6 @@
               android:contentDescription="@string/keyguard_accessibility_expand_lock_area" />
 
     </com.android.internal.policy.impl.keyguard.SlidingChallengeLayout>
-    
-            <include layout="@layout/keyguard_multi_user_selector" 
-                android:layout_gravity="bottom|center"/>
 			  
 </com.android.internal.policy.impl.keyguard.KeyguardHostView>
 
