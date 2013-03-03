@@ -54,6 +54,7 @@ import android.widget.RelativeLayout;
 
 import com.android.systemui.ExpandHelper;
 import com.android.systemui.R;
+import com.android.systemui.statusbar.phone.PanelBar;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 import com.android.systemui.statusbar.phone.QuickSettingsContainerView;
@@ -537,6 +538,10 @@ public class NotificationPanel extends RelativeLayout implements StatusBarPanel,
         }
     }
 
+    public void animateCollapseQuickSettings() {
+        mBar.mStatusBarView.collapseAllPanels(true);
+    }
+
     public void flipToNotifications() {
         if (mFlipSettingsViewAnim != null) mFlipSettingsViewAnim.cancel();
         if (mScrollViewAnim != null) mScrollViewAnim.cancel();
@@ -763,4 +768,3 @@ public class NotificationPanel extends RelativeLayout implements StatusBarPanel,
         }
     }
 }
-
