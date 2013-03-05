@@ -263,6 +263,7 @@
     <string name="quick_settings_gps_off_label">GPS 꺼짐</string>
     <string name="quick_settings_data_on_label">데이터 켜짐</string>
     <string name="quick_settings_data_off_label">데이터 꺼짐</string>
+    <string name="quick_settings_sleep">잠자기</string>
     <string name="quick_settings_navbar_hide_on_label">네비바 숨김 켜짐</string>
     <string name="quick_settings_navbar_hide_off_label">네비바 숨김 꺼짐</string>
     <string name="quick_settings_sound_on">소리 켜짐</string>

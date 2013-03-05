@@ -42,4 +42,5 @@
     <string name="toggle_NAVBARHIDE">네비바 숨김</string>
     <string name="toggle_QUICKRECORD">빠른 녹음</string>
     <string name="toggle_QUIETHOURS">취침 시간</string>
+    <string name="toggle_SLEEP">잠자기</string>
 </resources>
