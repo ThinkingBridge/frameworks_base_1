@@ -49,6 +49,7 @@ import com.android.internal.widget.multiwaveview.GlowPadView;
 import com.android.internal.widget.multiwaveview.TargetDrawable;
 
 import java.io.File;
+import java.lang.Exception;
 import java.net.URISyntaxException;
 
 public class NavRingHelpers {
@@ -101,6 +102,12 @@ public class NavRingHelpers {
                     Intent intent = Intent.parseUri(action, 0);
                     PackageManager pm = context.getPackageManager();
                     ActivityInfo info = intent.resolveActivityInfo(pm, PackageManager.GET_ACTIVITIES);
+
+                    if (info == null) {
+                        TargetDrawable drawable = new TargetDrawable(res, com.android.internal.R.drawable.ic_action_empty);
+                        drawable.setEnabled(false);
+                        return drawable;
+                    }
 
                     Drawable activityIcon = info.loadIcon(pm);
                     Drawable iconBg = res.getDrawable(
