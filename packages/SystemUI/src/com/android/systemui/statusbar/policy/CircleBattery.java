@@ -248,8 +248,8 @@ public class CircleBattery extends ImageView {
         updateChargeAnim();
 
         Paint usePaint = mPaintSystem;
-        // turn red at 15% - same level android battery warning appears
-        if (mLevel <= 15) {
+        // turn red at 14% - same level android battery warning appears
+        if (mLevel <= 14) {
             usePaint = mPaintRed;
         }
 
@@ -310,9 +310,9 @@ public class CircleBattery extends ImageView {
             initSizeMeasureIconHeight();
         }
 
-        mPaintFont.setTextSize(mCircleSize / 1.8f);
+        mPaintFont.setTextSize(mCircleSize / 2f);
 
-        float strokeWidth = mCircleSize / 9.5f;
+        float strokeWidth = mCircleSize / 6.5f;
         mPaintRed.setStrokeWidth(strokeWidth);
         mPaintSystem.setStrokeWidth(strokeWidth);
         mPaintGray.setStrokeWidth(strokeWidth / 3.5f);
@@ -345,7 +345,7 @@ public class CircleBattery extends ImageView {
                 com.android.systemui.R.drawable.stat_sys_wifi_signal_4_fully);
         final int x = measure.getWidth() / 2;
 
-        mCircleSize = 2;
+        mCircleSize = 0;
         for (int y = 0; y < measure.getHeight(); y++) {
             int alpha = Color.alpha(measure.getPixel(x, y));
             if (alpha > 5) {
