@@ -142,7 +142,7 @@ public class NavRingHelpers {
                     return new TargetDrawable(res, selector);
                 } catch (URISyntaxException e) {
                     resourceId = com.android.internal.R.drawable.ic_action_empty;
-                } catch (NameNotFoundException nnfe ) {
+                } catch (Exception e) {
                     resourceId = com.android.internal.R.drawable.ic_action_empty;
                 }
                 break;
