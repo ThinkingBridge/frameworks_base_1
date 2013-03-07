@@ -3643,6 +3643,12 @@ public final class Settings {
          * @hide
          */
         public static final String TOGGLES_STYLE = "toggls_style";
+
+        /**
+         * Screen shoot timeout
+         * @hide
+         */
+        public static final String SCREENSHOT_TIMEOUT = "screenshot_timeout";
     }
 
     /**

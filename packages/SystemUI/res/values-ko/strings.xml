@@ -276,5 +276,6 @@
     <string name="quick_settings_nofile">길게 눌러 녹음</string>
     <string name="quick_settings_pie_on_label">파이 켜짐</string>
     <string name="quick_settings_pie_off_label">파이 꺼짐</string>
+    <string name="quick_settings_screenshot">스크린샷 찍기</string>
 
 </resources>
