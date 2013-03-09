@@ -75,8 +75,8 @@ public class SbBatteryController extends LinearLayout {
     public static final int STYLE_ICON_CENTERED_TEXT = 3;
     public static final int STYLE_ICON_CIRCLEMOD = 4;
     public static final int STYLE_ICON_XOOM = 5;
-    public static final int STYLE_ICON_CIRCLE = 6;
-    public static final int STYLE_ICON_CIRCLE_PERCENT = 7;
+    public static final int BATTERY_STYLE_CIRCLE = 6;
+    public static final int BATTERY_STYLE_CIRCLE_PERCENT = 7;
     public static final int BATTERY_STYLE_DOTTED_CIRCLE_PERCENT = 8;
     public static final int STYLE_HIDE = 9;
 
@@ -149,7 +149,7 @@ public class SbBatteryController extends LinearLayout {
         } else if (mBatteryStyle == STYLE_ICON_XOOM) {
         	icon = plugged ? R.drawable.stat_sys_battery_charge_xoom
         			: R.drawable.stat_sys_battery_xoom;
-        } else if (mBatteryStyle == STYLE_ICON_CIRCLE || mBatteryStyle == STYLE_ICON_CIRCLE_PERCENT) {
+        } else if (mBatteryStyle == BATTERY_STYLE_CIRCLE || mBatteryStyle == BATTERY_STYLE_CIRCLE_PERCENT) {
         	icon = 0;
         } else {
             icon = plugged ? R.drawable.stat_sys_battery_charge
@@ -282,13 +282,13 @@ public class SbBatteryController extends LinearLayout {
                 mBatteryTextOnly.setVisibility(View.GONE);
                 setVisibility(View.VISIBLE);
                 break;
-            case STYLE_ICON_CIRCLE:
+            case BATTERY_STYLE_CIRCLE:
                 mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
                 mBatteryIcon.setVisibility(View.VISIBLE);
                 setVisibility(View.VISIBLE);
                 break;
-            case STYLE_ICON_CIRCLE_PERCENT:
+            case BATTERY_STYLE_CIRCLE_PERCENT:
             	mBatteryText.setVisibility(View.GONE);
                 mBatteryCenterText.setVisibility(View.GONE);
                 mBatteryIcon.setVisibility(View.VISIBLE);
