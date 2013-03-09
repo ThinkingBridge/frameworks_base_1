@@ -115,7 +115,7 @@ public class InfoCircus<Image> extends Activity {
             private void pickCID() {
             	int a;
             	a = myArr.size();
-            	if(a == num){
+            	if(num == 0) {
             		
             	}else{
                 	Drawable drawable = myArr.get(num);
