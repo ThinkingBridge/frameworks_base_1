@@ -115,13 +115,15 @@ public class InfoCircus<Image> extends Activity {
             private void pickCID() {
             	int a;
             	a = myArr.size();
-            	if(num == 0) {
+            	if(a == num) {
             		
-            	}else{
+                    num = 0;
+                    	
+                }else{
                 	Drawable drawable = myArr.get(num);
                     this.setImageDrawable(drawable);
                     num = num +1;	
-            	}
+                }
 
             }
 
